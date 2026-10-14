@@ -14,6 +14,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -23,26 +27,12 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
-      # 1. Konfigurasi Docker agar bisa push ke Google Container Registry (GCR)
-      - name: Configure Docker
-        run: gcloud auth configure-docker gcr.io --quiet
-
-      # 2. Build image Docker secara lokal di GitHub Actions
-      - name: Build Docker Image
-        run: docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} .
-
-      # 3. Push image Docker ke Google Container Registry
-      - name: Push Docker Image
-        run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
-
-      # 4. Deploy image yang sudah ada ke Cloud Run
+      # Google Cloud Run action dapat otomatis melakukan build & push (menggunakan Cloud Build) 
+      # atau Anda bisa langsung deploy dari source code tanpa repot konfigurasi manual docker push.
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
-          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          source: ./  # Melakukan deploy langsung dari source code repository
           flags: '--allow-unauthenticated'
