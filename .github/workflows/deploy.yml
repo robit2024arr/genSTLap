@@ -7,8 +7,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: "asia-southeast1"         # Singapura (Paling Murah & Dekat)
-  SERVICE_NAME: "genstlap"           # Nama service Cloud Run Anda
+  REGION: "asia-southeast1"
+  SERVICE_NAME: "genstlap"
 
 jobs:
   deploy:
@@ -26,10 +26,11 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Deploy to Cloud Run
+      # Deploy menggunakan Dockerfile yang ada di folder
+      - name: Deploy to Cloud Run via Dockerfile
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
-          source: .
+          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           flags: '--allow-unauthenticated'
