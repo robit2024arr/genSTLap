@@ -1,0 +1,65 @@
+xlsx data laporan dan ST dicopi ke luar karena akan dibuatkan versi spreadsheet nya untuk memudahkan sinkronisasi, pengolahan murni di online
+
+yang belum
+fitur mengambil data langsung dari spreadsheet "tim pemadam"
+
+lokasi 
+
+├── aset
+│   ├── Lap
+│   │   ├── data.xlsx
+│   │   ├── genlap.sh
+│   │   ├── keterangan.txt
+│   │   ├── laporan-CONTOH.docx
+│   │   └── laporan-template.docx
+│   ├── sh
+│   │   └── ambildatadarispreadsheet.sh
+│   └── ST
+│       ├── aset
+│       │   ├── crudmodul
+│       │   │   ├── create (copy).py
+│       │   │   ├── create.py
+│       │   │   ├── database.py
+│       │   │   ├── delete.py
+│       │   │   ├── __pycache__
+│       │   │   │   ├── create.cpython-312.pyc
+│       │   │   │   ├── database.cpython-312.pyc
+│       │   │   │   ├── delete.cpython-312.pyc
+│       │   │   │   └── view.cpython-312.pyc
+│       │   │   └── view.py
+│       │   ├── crud.py
+│       │   ├── generator.sh
+│       │   └── ST-template.docx
+│       ├── autocomplete.xlsx
+│       ├── catatan.txt
+│       ├── crud.sh
+│       ├── data.xlsx
+│       └── persiapan.sh
+├── keterangan.txt
+└── perintah.sh
+
+
+ini struktur folder saya
+
+saya ingin perintah.sh memanggil ambildatadarispreadsheet.sh 
+
+dimana ambildatadarispreadsheet.sh melakukan
+
+ambil data dari spreadsheet dengan bantuan google appscript
+
+
+spreadsehet sheet "shST"	 masuk ke "aset/ST/data.xlsx" sheet "ST"
+spreadsehet sheet "shSTTim"	 masuk ke "aset/ST/data.xlsx"  sheet "Tim"
+spreadsehet sheet "shSTAnggota"	   masuk ke "aset/ST/data.xlsx" sheet "Anggota"
+
+
+spreadsehet sheet "shLap" masuk ke "aset/Lap/data.xlsx"  sheet "ST"
+spreadsehet sheet  "shLapTIm" masuk ke "aset/Lap/data.xlsx"   sheet "Tim"
+spreadsehet sheet  "shLapAnggota" masuk ke "aset/Lap/data.xlsx"  sheet "Anggota"
+
+data yang diambil seluruh kolom dan baris dimulai row 2 untuk seluruh sheet dimasukkan juga ke row 2 seluruh sheet
+
+
+
+
+

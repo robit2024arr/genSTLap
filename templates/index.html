@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Laporan & ST - BAPPERIDA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero-card { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 12px; }
+        .action-card { border-radius: 10px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; }
+        .action-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .terminal-box { background-color: #1e1e1e; color: #39ff14; font-family: 'Courier New', Courier, monospace; border-radius: 8px; padding: 15px; min-height: 220px; max-height: 400px; overflow-y: auto; font-size: 0.9rem; white-space: pre-wrap; }
+        .badge-status { font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header Banner -->
+        <div class="hero-card p-4 mb-4 shadow">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h2 class="mb-1"><i class="bi bi-file-earmark-word-fill me-2"></i>Sistem Manajemen Laporan & Surat Tugas</h2>
+                    <p class="mb-0 opacity-75">BAPPERIDA - Generator Dokumen Otomatis Terhubung Google Apps Script & Cloud</p>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="badge bg-light text-dark px-3 py-2"><i class="bi bi-person-circle me-1"></i>Login: <strong>{{username}}</strong></span>
+                    <span class="badge bg-success px-3 py-2 badge-status" id="server-status"><i class="bi bi-broadcast me-1"></i>Server Aktif</span>
+                    <a href="/docs" target="_blank" class="badge bg-light text-dark px-3 py-2 text-decoration-none"><i class="bi bi-code-slash me-1"></i>Swagger Docs</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol Aksi Cepat (Menggantikan perintah.sh) -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card action-card h-100 p-3 text-center">
+                    <div class="text-primary mb-2"><i class="bi bi-cloud-arrow-down-fill display-5"></i></div>
+                    <h5>[1] Sinkron Data</h5>
+                    <p class="text-muted small mb-3">Tarik data terbaru dari Google Spreadsheet ke Excel lokal.</p>
+                    <button class="btn btn-outline-primary mt-auto w-100 fw-bold" onclick="callApi('/api/sync', 'Sinkronisasi Spreadsheet')">
+                        <i class="bi bi-play-circle me-1"></i> Sinkron Sekarang
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card action-card h-100 p-3 text-center">
+                    <div class="text-success mb-2"><i class="bi bi-file-earmark-text-fill display-5"></i></div>
+                    <h5>[2] Laporan (Lap)</h5>
+                    <p class="text-muted small mb-3">Generate file docx Laporan hasil pengolahan data.</p>
+                    <button class="btn btn-outline-success mt-auto w-100 fw-bold" onclick="callApi('/api/generate-laporan', 'Generator Laporan')">
+                        <i class="bi bi-gear-fill me-1"></i> Generate Laporan
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card action-card h-100 p-3 text-center">
+                    <div class="text-info mb-2"><i class="bi bi-file-earmark-check-fill display-5"></i></div>
+                    <h5>[3] Surat Tugas (ST)</h5>
+                    <p class="text-muted small mb-3">Generate file Surat Tugas (nost-Tgl.docx).</p>
+                    <button class="btn btn-outline-info mt-auto w-100 fw-bold" onclick="callApi('/api/generate-st', 'Generator Surat Tugas')">
+                        <i class="bi bi-file-text me-1"></i> Generate ST
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card action-card h-100 p-3 text-center border-warning">
+                    <div class="text-warning mb-2"><i class="bi bi-lightning-charge-fill display-5"></i></div>
+                    <h5>[⚡] Jalankan Semua</h5>
+                    <p class="text-muted small mb-3">Otomatis jalankan Sinkronisasi, buat ST, lalu buat Laporan.</p>
+                    <button class="btn btn-warning mt-auto w-100 fw-bold text-dark" onclick="callApi('/api/run-all', 'Menjalankan Semua Proses')">
+                        <i class="bi bi-play-fill me-1"></i> Jalankan Semua
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Output Log -->
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-terminal me-2"></i>Konsol Log Eksekusi</span>
+                <div>
+                    <span id="loading-spinner" class="spinner-border spinner-border-sm text-warning me-2 d-none" role="status"></span>
+                    <button class="btn btn-sm btn-outline-light py-0" onclick="clearLog()"><i class="bi bi-trash"></i> Bersihkan Log</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="terminal-box" id="terminal-log">Menunggu instruksi... Klik salah satu tombol di atas atau panggil melalui Google Apps Script.</div>
+            </div>
+        </div>
+
+        <!-- Daftar File Hasil Generate & Petunjuk Google Apps Script -->
+        <div class="row g-4">
+            <!-- Daftar File -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-bold"><i class="bi bi-folder-check text-primary me-2"></i>File Hasil Generate</h6>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="loadFiles()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active py-1 px-3" id="pills-st-tab" data-bs-toggle="pill" data-bs-target="#pills-st" type="button">Surat Tugas (ST)</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link py-1 px-3" id="pills-lap-tab" data-bs-toggle="pill" data-bs-target="#pills-lap" type="button">Laporan (Lap)</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-st">
+                                <div id="st-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-lap">
+                                <div id="lap-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Petunjuk Google Apps Script -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-white">
+                        <h6 class="mb-0 fw-bold"><i class="bi bi-google text-danger me-2"></i>Panduan Panggilan dari Google Apps Script</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted mb-2">Gunakan fungsi ini di Google Apps Script (Spreadsheet) untuk memicu generator langsung dari tombol di Google Sheets:</p>
+                        <pre class="bg-light p-2 rounded small" style="max-height: 250px; overflow-y: auto;"><code>function triggerGeneratorDariSheet() {
+  // Ganti URL dengan domain Render.com Anda saat sudah di-deploy
+  var url = "https://nama-app-anda.onrender.com/api/run-all"; 
+  
+  // Basic Auth menggunakan username:password dari username.txt
+  var authHeader = "Basic " + Utilities.base64Encode("admin:bapperida2026");
+
+  var options = {
+    "method": "post",
+    "contentType": "application/json",
+    "headers": {
+      "Authorization": authHeader
+    },
+    "muteHttpExceptions": true
+  };
+  
+  var response = UrlFetchApp.fetch(url, options);
+  var json = JSON.parse(response.getContentText());
+  Logger.log(json.message);
+  SpreadsheetApp.getActiveSpreadsheet().toast(json.message, "Selesai", 5);
+}</code></pre>
+                        <div class="alert alert-info py-2 px-3 small mb-0">
+                            <i class="bi bi-info-circle me-1"></i> Saat di-deploy ke Render.com, Anda cukup mengganti <code>url</code> dengan domain Render Anda dan pastikan header <code>Authorization</code> sesuai akun di <code>username.txt</code>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const terminal = document.getElementById("terminal-log");
+        const spinner = document.getElementById("loading-spinner");
+
+        function logToTerminal(text) {
+            const time = new Date().toLocaleTimeString();
+            terminal.innerText += `\n[${time}] ${text}`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function clearLog() {
+            terminal.innerText = "Log dibersihkan.";
+        }
+
+        async function callApi(endpoint, actionName) {
+            spinner.classList.remove("d-none");
+            logToTerminal(`Memulai: ${actionName}...`);
+            try {
+                const response = await fetch(endpoint, { method: "POST" });
+                const data = await response.json();
+                if (response.ok) {
+                    logToTerminal(`[SUKSES] ${data.message || 'Selesai.'}`);
+                    if (data.log) {
+                        logToTerminal(`Output Skrip:\n---------------------\n${data.log}\n---------------------`);
+                    }
+                } else {
+                    const detail = data.detail || {};
+                    const errText = detail.output || detail.error || JSON.stringify(detail);
+                    logToTerminal(`[GAGAL] Error:\n${errText}`);
+                }
+            } catch (err) {
+                logToTerminal(`[ERROR KONEKSI] Tidak dapat menghubungi server: ${err.message}`);
+            } finally {
+                spinner.classList.add("d-none");
+                loadFiles();
+            }
+        }
+
+        async function loadFiles() {
+            try {
+                const res = await fetch('/api/files');
+                const data = await res.json();
+                
+                // Render ST Files
+                const stList = document.getElementById('st-file-list');
+                if (data.st_files && data.st_files.length > 0) {
+                    stList.innerHTML = data.st_files.map(f => `
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-1">
+                            <div><i class="bi bi-file-earmark-word text-primary me-2"></i>${f.name} <span class="text-muted">(${f.size_kb} KB)</span></div>
+                            <a href="/api/download/st/${encodeURIComponent(f.name)}" class="btn btn-sm btn-outline-primary py-0"><i class="bi bi-download"></i> Unduh</a>
+                        </div>
+                    `).join('');
+                } else {
+                    stList.innerHTML = '<div class="text-muted p-2">Belum ada file ST yang digenerate.</div>';
+                }
+
+                // Render Lap Files
+                const lapList = document.getElementById('lap-file-list');
+                if (data.lap_files && data.lap_files.length > 0) {
+                    lapList.innerHTML = data.lap_files.map(f => `
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-1">
+                            <div><i class="bi bi-file-earmark-word text-success me-2"></i>${f.name} <span class="text-muted">(${f.size_kb} KB)</span></div>
+                            <a href="/api/download/lap/${encodeURIComponent(f.name)}" class="btn btn-sm btn-outline-success py-0"><i class="bi bi-download"></i> Unduh</a>
+                        </div>
+                    `).join('');
+                } else {
+                    lapList.innerHTML = '<div class="text-muted p-2">Belum ada file Laporan yang digenerate.</div>';
+                }
+            } catch (err) {
+                console.error("Gagal memuat file:", err);
+            }
+        }
+
+        // Muat daftar file saat pertama kali dibuka
+        window.onload = () => {
+            loadFiles();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+- sudah berjalan dengan baik cuma database perlu dilengkapi placeholder juga masih belum menyeluruh baru sampai tabel
+- harus menggunakan "venv-generator laporan harian.zip"
+
+kendala
+- belum diketahui ini di generate menjadi beberapa ST atau beberapa TIM
