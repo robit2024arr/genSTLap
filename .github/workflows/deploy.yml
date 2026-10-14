@@ -26,8 +26,20 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      # Deploy menggunakan Dockerfile yang ada di folder
-      - name: Deploy to Cloud Run via Dockerfile
+      # 1. Konfigurasi Docker agar bisa push ke Google Container Registry (GCR)
+      - name: Configure Docker
+        run: gcloud auth configure-docker gcr.io --quiet
+
+      # 2. Build image Docker secara lokal di GitHub Actions
+      - name: Build Docker Image
+        run: docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} .
+
+      # 3. Push image Docker ke Google Container Registry
+      - name: Push Docker Image
+        run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+
+      # 4. Deploy image yang sudah ada ke Cloud Run
+      - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE_NAME }}
