@@ -1,9 +1,7 @@
 name: Deploy to Cloud Run
 
 on:
-  push:
-    branches:
-      - main  # Ganti ke 'master' jika branch utama Anda master
+  workflow_dispatch: # Mengubah trigger menjadi manual
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
