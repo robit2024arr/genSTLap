@@ -1,1 +1,0 @@
-- harus pakai 'venvST 7 sep 2026 0745.zip'
