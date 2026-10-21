@@ -306,38 +306,11 @@ def get_files(user: str = Depends(authenticate)):
     }
 
 
-@app.get("/api/download/{category}/{filename}")
-def download_file(
-    category: str, filename: str, user: str = Depends(authenticate)
-):
-    """Mengunduh file docx individual yang telah dibuat."""
-    cat = category.lower()
-    if cat == "st":
-        target_path = ST_OUTPUT_DIR / filename
-    elif cat == "stbalai":
-        target_path = STbalai_OUTPUT_DIR / filename
-    elif cat in ["lap", "laporan"]:
-        target_path = LAP_OUTPUT_DIR / filename
-    else:
-        raise HTTPException(
-            status_code=400,
-            detail="Kategori tidak valid. Gunakan 'st', 'stbalai', atau 'lap'.",
-        )
-
-    if not target_path.exists() or not target_path.is_file():
-        raise HTTPException(
-            status_code=404, detail=f"File '{filename}' tidak ditemukan."
-        )
-
-    return FileResponse(
-        path=str(target_path),
-        filename=filename,
-        media_type=(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ),
-    )
+# ==================== ENDPOINT DOWNLOAD ====================
 
 
+# Catatan: Route ZIP didefinisikan LEBIH DULU daripada route file individual
+# untuk menghindari bentrok / routing ambiguity pada FastAPI.
 @app.get("/api/download/zip/{category}")
 def download_zip(category: str, user: str = Depends(authenticate)):
     """Membungkus file-file hasil generate ke dalam file ZIP dan mengunduhnya."""
@@ -367,7 +340,6 @@ def download_zip(category: str, user: str = Depends(authenticate)):
         for subfolder_name, folder_path in folders_to_zip:
             if folder_path.exists():
                 for file_path in folder_path.glob("*.docx"):
-                    # Masukkan file ke ZIP dengan struktur folder di dalamnya
                     arcname = f"{subfolder_name}/{file_path.name}"
                     zip_file.write(file_path, arcname=arcname)
                     files_added += 1
@@ -386,6 +358,38 @@ def download_zip(category: str, user: str = Depends(authenticate)):
         headers={
             "Content-Disposition": f"attachment; filename={zip_filename}"
         },
+    )
+
+
+@app.get("/api/download/{category}/{filename}")
+def download_file(
+    category: str, filename: str, user: str = Depends(authenticate)
+):
+    """Mengunduh file docx individual yang telah dibuat."""
+    cat = category.lower()
+    if cat == "st":
+        target_path = ST_OUTPUT_DIR / filename
+    elif cat == "stbalai":
+        target_path = STbalai_OUTPUT_DIR / filename
+    elif cat in ["lap", "laporan"]:
+        target_path = LAP_OUTPUT_DIR / filename
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="Kategori tidak valid. Gunakan 'st', 'stbalai', atau 'lap'.",
+        )
+
+    if not target_path.exists() or not target_path.is_file():
+        raise HTTPException(
+            status_code=404, detail=f"File '{filename}' tidak ditemukan."
+        )
+
+    return FileResponse(
+        path=str(target_path),
+        filename=filename,
+        media_type=(
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ),
     )
 
 
