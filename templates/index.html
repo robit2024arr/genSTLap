@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-    <div class="container py-4">
+    <div class="container-fluid px-4 py-4">
         <!-- Header Banner -->
         <div class="hero-card p-4 mb-4 shadow">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -32,9 +32,10 @@
             </div>
         </div>
 
-        <!-- Tombol Aksi Cepat (Menggantikan perintah.sh) -->
+        <!-- Tombol Aksi Cepat -->
         <div class="row g-3 mb-4">
-            <div class="col-md-3">
+            <!-- [1] Sinkron Data -->
+            <div class="col-md-6 col-lg-3">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-primary mb-2"><i class="bi bi-cloud-arrow-down-fill display-5"></i></div>
                     <h5>[1] Sinkron Data</h5>
@@ -44,7 +45,9 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <!-- [2] Laporan (Lap) -->
+            <div class="col-md-6 col-lg-2">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-success mb-2"><i class="bi bi-file-earmark-text-fill display-5"></i></div>
                     <h5>[2] Laporan (Lap)</h5>
@@ -54,7 +57,9 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <!-- [3] Surat Tugas (ST) -->
+            <div class="col-md-6 col-lg-2">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-info mb-2"><i class="bi bi-file-earmark-check-fill display-5"></i></div>
                     <h5>[3] Surat Tugas (ST)</h5>
@@ -64,11 +69,25 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <!-- [4] Surat Tugas Balai (STbalai) -->
+            <div class="col-md-6 col-lg-2">
+                <div class="card action-card h-100 p-3 text-center">
+                    <div class="text-purple mb-2" style="color: #6f42c1;"><i class="bi bi-building-fill-check display-5"></i></div>
+                    <h5>[4] ST Balai</h5>
+                    <p class="text-muted small mb-3">Generate file Surat Tugas Balai.</p>
+                    <button class="btn btn-outline-secondary mt-auto w-100 fw-bold" style="color: #6f42c1; border-color: #6f42c1;" onclick="callApi('/api/generate-stbalai', 'Generator ST Balai')">
+                        <i class="bi bi-building me-1"></i> Generate ST Balai
+                    </button>
+                </div>
+            </div>
+
+            <!-- [⚡] Jalankan Semua -->
+            <div class="col-md-6 col-lg-3">
                 <div class="card action-card h-100 p-3 text-center border-warning">
                     <div class="text-warning mb-2"><i class="bi bi-lightning-charge-fill display-5"></i></div>
                     <h5>[⚡] Jalankan Semua</h5>
-                    <p class="text-muted small mb-3">Otomatis jalankan Sinkronisasi, buat ST, lalu buat Laporan.</p>
+                    <p class="text-muted small mb-3">Otomatis jalankan Sync, ST, STbalai, lalu Laporan.</p>
                     <button class="btn btn-warning mt-auto w-100 fw-bold text-dark" onclick="callApi('/api/run-all', 'Menjalankan Semua Proses')">
                         <i class="bi bi-play-fill me-1"></i> Jalankan Semua
                     </button>
@@ -99,7 +118,7 @@
                         <h6 class="mb-0 fw-bold"><i class="bi bi-folder-check text-primary me-2"></i>File Hasil Generate</h6>
                         <div class="d-flex gap-2">
                             <!-- Tombol Download All (.ZIP) Global -->
-                            <a href="/api/download/zip/all" class="btn btn-sm btn-dark" title="Unduh Semua File (ST & Laporan) (.ZIP)">
+                            <a href="/api/download/zip/all" class="btn btn-sm btn-dark" title="Unduh Semua File (ST, STbalai & Laporan) (.ZIP)">
                                 <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All ZIP
                             </a>
                             <button class="btn btn-sm btn-outline-secondary" onclick="loadFiles()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
@@ -110,6 +129,9 @@
                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active py-1 px-3" id="pills-st-tab" data-bs-toggle="pill" data-bs-target="#pills-st" type="button">Surat Tugas (ST)</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link py-1 px-3" id="pills-stbalai-tab" data-bs-toggle="pill" data-bs-target="#pills-stbalai" type="button">ST Balai</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link py-1 px-3" id="pills-lap-tab" data-bs-toggle="pill" data-bs-target="#pills-lap" type="button">Laporan (Lap)</button>
@@ -127,6 +149,17 @@
                                     </a>
                                 </div>
                                 <div id="st-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
+                            </div>
+
+                            <!-- Tab Surat Tugas Balai -->
+                            <div class="tab-pane fade" id="pills-stbalai">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span class="text-muted small">File Surat Tugas Balai</span>
+                                    <a href="/api/download/zip/stbalai" id="btn-zip-stbalai" class="btn btn-sm btn-outline-secondary py-0" style="color: #6f42c1; border-color: #6f42c1;">
+                                        <i class="bi bi-file-earmark-zip me-1"></i> Unduh Semua ST Balai (.ZIP)
+                                    </a>
+                                </div>
+                                <div id="stbalai-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
                             </div>
 
                             <!-- Tab Laporan -->
@@ -240,6 +273,22 @@
                 } else {
                     btnZipSt.classList.add('disabled');
                     stList.innerHTML = '<div class="text-muted p-2">Belum ada file ST yang digenerate.</div>';
+                }
+
+                // Render ST Balai Files
+                const stbalaiList = document.getElementById('stbalai-file-list');
+                const btnZipStbalai = document.getElementById('btn-zip-stbalai');
+                if (data.stbalai_files && data.stbalai_files.length > 0) {
+                    btnZipStbalai.classList.remove('disabled');
+                    stbalaiList.innerHTML = data.stbalai_files.map(f => `
+                        <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-1">
+                            <div><i class="bi bi-file-earmark-word me-2" style="color: #6f42c1;"></i>${f.name} <span class="text-muted">(${f.size_kb} KB)</span></div>
+                            <a href="/api/download/stbalai/${encodeURIComponent(f.name)}" class="btn btn-sm py-0" style="color: #6f42c1; border-color: #6f42c1;"><i class="bi bi-download"></i> Unduh</a>
+                        </div>
+                    `).join('');
+                } else {
+                    btnZipStbalai.classList.add('disabled');
+                    stbalaiList.innerHTML = '<div class="text-muted p-2">Belum ada file ST Balai yang digenerate.</div>';
                 }
 
                 // Render Lap Files
