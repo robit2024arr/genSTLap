@@ -87,6 +87,10 @@ ST_OUTPUT_DIR = BASE_DIR / "ST"
 LAP_OUTPUT_DIR = BASE_DIR / "Lap"
 STbalai_OUTPUT_DIR = BASE_DIR / "STbalai"
 
+# Buat folder output jika belum ada
+for folder in [ST_OUTPUT_DIR, LAP_OUTPUT_DIR, STbalai_OUTPUT_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
 
 def run_python_script(script_path: Path) -> Dict[str, Any]:
     """Menjalankan file script python menggunakan executable saat ini dan mengembalikan outputnya."""
