@@ -1,0 +1,4408 @@
+{
+    "shST": [
+        [
+            528,
+            "1 Oktober 2026",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai tanggal 1-5 oktober"
+        ],
+        [
+            534,
+            "2 Oktober 2026",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai tanggal 1-5 oktober"
+        ],
+        [
+            542,
+            "3 Oktober 2026",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai tanggal 1-5 oktober"
+        ],
+        [
+            549,
+            "4 Oktober 2026",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai tanggal 1-5 oktober"
+        ],
+        [
+            556,
+            "5 Oktober 2026",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai tanggal 1-5 oktober"
+        ],
+        [
+            564,
+            "6 Oktober 2026",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "st pemadaman balai  6-10 oktober"
+        ],
+        [
+            572,
+            "7 Oktober 2026",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "6-10 oktober"
+        ],
+        [
+            580,
+            "8 Oktober 2026",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "6-10 oktober"
+        ],
+        [
+            588,
+            "9 Oktober 2026",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "6-10 oktober"
+        ],
+        [
+            596,
+            "10 Oktober 2026",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            "1 (satu) hari",
+            "6-10 oktober"
+        ]
+    ],
+    "shSTTim": [
+        [
+            1,
+            528,
+            528,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9840",
+            "113.6999",
+            "1 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            2,
+            528,
+            529,
+            "KHDTK UPR",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8677",
+            "113.5092",
+            "1 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            3,
+            528,
+            530,
+            "Jl. Viktoria Blok C1",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1840",
+            "113.8128",
+            "1 Oktober 2026",
+            "-2.1847",
+            "113.8134",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            7
+        ],
+        [
+            4,
+            528,
+            531,
+            "Jl. Karya Gemor Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3137",
+            "114.0149",
+            "1 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            5,
+            528,
+            532,
+            "Jl. Subud",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0641",
+            "113.8000",
+            "1 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            6,
+            528,
+            533,
+            "Jl. Buluh Merindu",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2885",
+            "113.9348",
+            "1 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 308/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            7,
+            534,
+            534,
+            "Jl. Cilik Riwut / Trans 38",
+            "Kelurahan Sei Gohong",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.9438",
+            "113.7370",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            8,
+            534,
+            535,
+            "KHDTK UPR",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8687",
+            "113.5083",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            7
+        ],
+        [
+            9,
+            534,
+            536,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9818",
+            "113.6982",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            10,
+            534,
+            537,
+            "Jl. Marang (Belakang SDN-1 Marang)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0635",
+            "113.7948",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            11,
+            534,
+            538,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2962",
+            "114.0187",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            12,
+            534,
+            539,
+            "Jl. Viktoria Blok C1",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1840",
+            "113.8128",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            13,
+            534,
+            540,
+            "Jl. Hiu Putih Lanjutan",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.2084",
+            "113.8308",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            14,
+            534,
+            541,
+            "Jl. Buluh Merindu",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2885",
+            "113.9348",
+            "2 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 309/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            15,
+            542,
+            542,
+            "Jl. Hiu Putih Lanjutan",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.2083",
+            "113.8299",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            16,
+            542,
+            543,
+            "Jl. Viktoria Blok C1",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1838",
+            "113.8120",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            17,
+            542,
+            544,
+            "Jl. Kasongan",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8391",
+            "113.4383",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            7
+        ],
+        [
+            18,
+            542,
+            545,
+            "Jl. Marang (Belakang SDN-1 Marang)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0636",
+            "113.7941",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            19,
+            542,
+            546,
+            "Jl. Misik Ujung",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3254",
+            "114.0192",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            20,
+            542,
+            547,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2942",
+            "114.0186",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            21,
+            542,
+            548,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9796",
+            "113.6982",
+            "3 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 310/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            22,
+            549,
+            549,
+            "Jl. Viktoria Blok C1",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1843",
+            "113.8131",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            23,
+            549,
+            550,
+            "Jl. Hiu Putih Lanjutan",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.2079",
+            "113.8306",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            24,
+            549,
+            551,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9798",
+            "113.7920",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            25,
+            549,
+            552,
+            "Jl. Kasongan",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8426",
+            "113.4398",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            26,
+            549,
+            553,
+            "Jl. Misik Ujung",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3253",
+            "114.0198",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            27,
+            549,
+            554,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2944",
+            "114.0185",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            28,
+            549,
+            555,
+            "Jl. Marang",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0653",
+            "113.7892",
+            "4 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 311/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            29,
+            556,
+            556,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9803",
+            "113.6972",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            30,
+            556,
+            557,
+            "Jl. Marang (sebelah utara)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0703",
+            "113.7789",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            31,
+            556,
+            558,
+            "Jl. Naga Sari Ujung",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1813",
+            "113.8075",
+            "5 Oktober 2026",
+            "-2.1826",
+            "113.8062",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            32,
+            556,
+            559,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1852",
+            "113.8120",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            33,
+            556,
+            560,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2943",
+            "114.0186",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            34,
+            556,
+            561,
+            "Jl. Misik Ujung",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3252",
+            "114.0199",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            35,
+            556,
+            562,
+            "Jl. Mahir Mahar km 12",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2782",
+            "113.9675",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            36,
+            556,
+            563,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8421",
+            "113.4408",
+            "5 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai tanggal 1-5 oktober",
+            "ST. 312/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            37,
+            564,
+            564,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9806",
+            "113.6969",
+            "6 Oktober 2026",
+            "",
+            "",
+            "st pemadaman balai  6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            38,
+            564,
+            565,
+            "Jl. Marang (sebelah utara)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0693",
+            "113.7804",
+            "6 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            39,
+            564,
+            566,
+            "Jl. Naga Sari Ujung",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1813",
+            "113.8075",
+            "6 Oktober 2026",
+            "-2.1826",
+            "113.8062",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            40,
+            564,
+            567,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1856",
+            "113.8117",
+            "6 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            41,
+            564,
+            568,
+            "Jl. Bina Sejahtera Ujung (Agro Wisata Misik)",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3246",
+            "114.0207",
+            "6 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            42,
+            564,
+            569,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3939",
+            "114.0181",
+            "6 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            43,
+            564,
+            570,
+            "Jl. Mahir Mahar km 12",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2782",
+            "113.9675",
+            "6 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            44,
+            564,
+            571,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8391",
+            "113.4383",
+            "6 Oktober 2026",
+            "1°50'18",
+            "113°26'19",
+            "6-10 oktober",
+            "ST. 313/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            45,
+            572,
+            572,
+            "Jl. Pariwisata Katune km 32 Taman Nasional Sebangau (TNS)",
+            "Kelurahan Tangkiling",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-1.9811",
+            "113.6967",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            46,
+            572,
+            573,
+            "Jl. Marang (sebelah utara)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0686",
+            "113.7801",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            47,
+            572,
+            574,
+            "Jl. Bina Sejahtera Ujung (Agro Wisata Misik)",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3246",
+            "114.0207",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            48,
+            572,
+            575,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2926",
+            "114.0186",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            49,
+            572,
+            576,
+            "Jl. Mahir Mahar (Samping Jl. Kamboja)",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2774",
+            "113.9574",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            50,
+            572,
+            577,
+            "Jl. Naga Sari Ujung",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1813",
+            "113.8075",
+            "7 Oktober 2026",
+            "-2.1826",
+            "113.8062",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            51,
+            572,
+            578,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1582",
+            "113.8226",
+            "7 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            52,
+            572,
+            579,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "1°50'18",
+            "113°26'19",
+            "7 Oktober 2026",
+            "336'' / -1.83842667",
+            "992'' / 113.43888667",
+            "6-10 oktober",
+            "ST. 314/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            53,
+            580,
+            580,
+            "Jl. Pariwisata Cilik Riwut km 32",
+            "Kelurahan Banturung",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.9877",
+            "113.6983",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            54,
+            580,
+            581,
+            "Jl. Marang (Tahura Marang)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0658",
+            "113.7805",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            55,
+            580,
+            582,
+            "Jl. Norkim Batiti",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2807",
+            "113.9754",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            56,
+            580,
+            583,
+            "Jl. Bina Sejahtera Ujung (Agro Wisata Misik)",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3246",
+            "114.0214",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            57,
+            580,
+            584,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2923",
+            "114.0183",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            58,
+            580,
+            585,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "1°50'20",
+            "113°26'16",
+            "8 Oktober 2026",
+            "976'' / -1.83916",
+            "704'' / 113.43797333",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            59,
+            580,
+            586,
+            "Jl. Naga Sari Ujung",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1813",
+            "113.8075",
+            "8 Oktober 2026",
+            "-2.1826",
+            "113.8062",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            60,
+            580,
+            587,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1851",
+            "113.8117",
+            "8 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 315/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            61,
+            588,
+            588,
+            "Jl. Mahir Mahar km 12 (belakang cetak batako)",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2793",
+            "113.9704",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            62,
+            588,
+            589,
+            "Jl. Pariwisata Cilik Riwut km 32",
+            "Kelurahan Banturung",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.9876",
+            "113.6983",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            63,
+            588,
+            590,
+            "Jl. Marang (Tahura Marang)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0661",
+            "113.7810",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            64,
+            588,
+            591,
+            "Jl. Bina Sejahtera Ujung (Agro Wisata Misik)",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.3246",
+            "114.0212",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            65,
+            588,
+            592,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2934",
+            "114.0179",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            66,
+            588,
+            593,
+            "Jl. Norkim Batiti",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2807",
+            "113.9754",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            67,
+            588,
+            594,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1861",
+            "113.8116",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            68,
+            588,
+            595,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8394",
+            "113.4377",
+            "9 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 316/DALKARHUT/KAL-1/10/2026",
+            6
+        ],
+        [
+            69,
+            596,
+            596,
+            "Jl. Viktoria Blok C",
+            "Kelurahan Bukit Tunggal",
+            "Kec. Jekan Raya",
+            "Kota Palangka Raya",
+            "-2.1881",
+            "113.8104",
+            "10 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            70,
+            596,
+            597,
+            "Jl. Kampung Baru",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2934",
+            "114.0199",
+            "10 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            71,
+            596,
+            598,
+            "Jl. Kasongan ",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8386",
+            "113.4389",
+            "10 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            3
+        ],
+        [
+            72,
+            596,
+            599,
+            "Jl. Marang (Tahura Marang)",
+            "Kelurahan Marang",
+            "Kec. Bukit Batu",
+            "Kota Palangka Raya",
+            "-2.0652",
+            "113.7799",
+            "10 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            5
+        ],
+        [
+            73,
+            596,
+            600,
+            "Jl. Talawang",
+            "Kelurahan Panarung",
+            "Kec. Pahandut",
+            "Kota Palangka Raya",
+            "-2.2775",
+            "113.9715",
+            "10 Oktober 2026",
+            "",
+            "",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            4
+        ],
+        [
+            74,
+            596,
+            601,
+            "Jl. Mahir Mahar km 12,5 (Galian C Pagar Seng)",
+            "Kelurahan Sabaru",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2811",
+            "113.9721",
+            "10 Oktober 2026",
+            "-2.2785",
+            "113.9717",
+            "6-10 oktober",
+            "ST. 317/DALKARHUT/KAL-1/10/2026",
+            8
+        ]
+    ],
+    "shSTAnggota": [
+        [
+            1,
+            528,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            2,
+            528,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            3,
+            528,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            4,
+            528,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            5,
+            528,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            6,
+            528,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            7,
+            529,
+            1,
+            "Yurdianto",
+            "Ketua",
+            ""
+        ],
+        [
+            8,
+            529,
+            2,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            9,
+            529,
+            3,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            10,
+            529,
+            4,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            11,
+            529,
+            5,
+            "Andrijono",
+            "Anggota",
+            ""
+        ],
+        [
+            12,
+            529,
+            6,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            13,
+            530,
+            1,
+            "Misransyah",
+            "Ketua",
+            ""
+        ],
+        [
+            14,
+            530,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            15,
+            530,
+            3,
+            "Prengky",
+            "Anggota",
+            ""
+        ],
+        [
+            16,
+            530,
+            4,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            17,
+            530,
+            5,
+            "Supiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            18,
+            530,
+            6,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            19,
+            530,
+            7,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            20,
+            531,
+            1,
+            "Bambang Irawan",
+            "Ketua",
+            ""
+        ],
+        [
+            21,
+            531,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            22,
+            531,
+            3,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            23,
+            531,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            24,
+            531,
+            5,
+            "Rusmawati",
+            "Anggota",
+            ""
+        ],
+        [
+            25,
+            531,
+            6,
+            "Yusni Anggreni",
+            "Anggota",
+            ""
+        ],
+        [
+            26,
+            532,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            27,
+            532,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            28,
+            532,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            29,
+            532,
+            4,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            30,
+            532,
+            5,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            31,
+            533,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            32,
+            533,
+            2,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            33,
+            533,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            34,
+            533,
+            4,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            35,
+            534,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            36,
+            534,
+            2,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            37,
+            534,
+            3,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            38,
+            534,
+            4,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            39,
+            534,
+            5,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            40,
+            534,
+            6,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            41,
+            535,
+            1,
+            "Yurdianto",
+            "Ketua",
+            ""
+        ],
+        [
+            42,
+            535,
+            2,
+            "Andri",
+            "Anggota",
+            ""
+        ],
+        [
+            43,
+            535,
+            3,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            44,
+            535,
+            4,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            45,
+            535,
+            5,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            46,
+            535,
+            6,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            47,
+            535,
+            7,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            48,
+            536,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            49,
+            536,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            50,
+            536,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            51,
+            536,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            52,
+            536,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            53,
+            536,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            54,
+            537,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            55,
+            537,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            56,
+            537,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            57,
+            537,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            58,
+            537,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            59,
+            538,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            60,
+            538,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            61,
+            538,
+            3,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            62,
+            538,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            63,
+            538,
+            5,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            64,
+            538,
+            6,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            65,
+            539,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            66,
+            539,
+            2,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            67,
+            539,
+            3,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            68,
+            540,
+            1,
+            "Misransyah",
+            "Ketua",
+            ""
+        ],
+        [
+            69,
+            540,
+            2,
+            "Prengky",
+            "Anggota",
+            ""
+        ],
+        [
+            70,
+            540,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            71,
+            541,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            72,
+            541,
+            2,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            73,
+            541,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            74,
+            541,
+            4,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            75,
+            542,
+            1,
+            "Misransyah",
+            "Ketua",
+            ""
+        ],
+        [
+            76,
+            542,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            77,
+            542,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            78,
+            543,
+            1,
+            "Prengky",
+            "Ketua",
+            ""
+        ],
+        [
+            79,
+            543,
+            2,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            80,
+            543,
+            3,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            81,
+            544,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            82,
+            544,
+            2,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            83,
+            544,
+            3,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            84,
+            544,
+            4,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            85,
+            544,
+            5,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            86,
+            544,
+            6,
+            "Andri",
+            "Anggota",
+            ""
+        ],
+        [
+            87,
+            544,
+            7,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            88,
+            545,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            89,
+            545,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            90,
+            545,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            91,
+            545,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            92,
+            545,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            93,
+            546,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            94,
+            546,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            95,
+            546,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            96,
+            546,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            97,
+            546,
+            5,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            98,
+            547,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            99,
+            547,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            100,
+            547,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            101,
+            547,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            102,
+            547,
+            5,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            103,
+            547,
+            6,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            104,
+            548,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            105,
+            548,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            106,
+            548,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            107,
+            548,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            108,
+            548,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            109,
+            548,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            110,
+            549,
+            1,
+            "Prengky",
+            "Ketua",
+            ""
+        ],
+        [
+            111,
+            549,
+            2,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            112,
+            549,
+            3,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            113,
+            549,
+            4,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            114,
+            550,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            115,
+            550,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            116,
+            550,
+            3,
+            "Misransyah",
+            "Anggota",
+            ""
+        ],
+        [
+            117,
+            551,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            118,
+            551,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            119,
+            551,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            120,
+            551,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            121,
+            551,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            122,
+            551,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            123,
+            552,
+            1,
+            "Yurdianto",
+            "Ketua",
+            ""
+        ],
+        [
+            124,
+            552,
+            2,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            125,
+            552,
+            3,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            126,
+            552,
+            4,
+            "Andrijono",
+            "Anggota",
+            ""
+        ],
+        [
+            127,
+            552,
+            5,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            128,
+            552,
+            6,
+            "Andri",
+            "Anggota",
+            ""
+        ],
+        [
+            129,
+            553,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            130,
+            553,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            131,
+            553,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            132,
+            553,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            133,
+            554,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            134,
+            554,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            135,
+            554,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            136,
+            554,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            137,
+            554,
+            5,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            138,
+            555,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            139,
+            555,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            140,
+            555,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            141,
+            555,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            142,
+            555,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            143,
+            556,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            144,
+            556,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            145,
+            556,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            146,
+            556,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            147,
+            556,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            148,
+            556,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            149,
+            557,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            150,
+            557,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            151,
+            557,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            152,
+            557,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            153,
+            557,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            154,
+            558,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            155,
+            558,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            156,
+            558,
+            3,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            157,
+            558,
+            4,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            158,
+            559,
+            1,
+            "Prengky",
+            "Ketua",
+            ""
+        ],
+        [
+            159,
+            559,
+            2,
+            "Misransyah",
+            "Anggota",
+            ""
+        ],
+        [
+            160,
+            559,
+            3,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            161,
+            559,
+            4,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            162,
+            560,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            163,
+            560,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            164,
+            560,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            165,
+            560,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            166,
+            560,
+            5,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            167,
+            560,
+            6,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            168,
+            561,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            169,
+            561,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            170,
+            561,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            171,
+            561,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            172,
+            561,
+            5,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            173,
+            562,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            174,
+            562,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            175,
+            562,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            176,
+            563,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            177,
+            563,
+            2,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            178,
+            563,
+            3,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            179,
+            563,
+            4,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            180,
+            563,
+            5,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            181,
+            563,
+            6,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            182,
+            564,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            183,
+            564,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            184,
+            564,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            185,
+            564,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            186,
+            564,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            187,
+            564,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            188,
+            565,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            189,
+            565,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            190,
+            565,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            191,
+            565,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            192,
+            565,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            193,
+            566,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            194,
+            566,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            195,
+            566,
+            3,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            196,
+            566,
+            4,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            197,
+            567,
+            1,
+            "Prengky",
+            "Ketua",
+            ""
+        ],
+        [
+            198,
+            567,
+            2,
+            "Misransyah",
+            "Anggota",
+            ""
+        ],
+        [
+            199,
+            567,
+            3,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            200,
+            567,
+            4,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            201,
+            567,
+            5,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            202,
+            568,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            203,
+            568,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            204,
+            568,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            205,
+            568,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            206,
+            568,
+            5,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            207,
+            569,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            208,
+            569,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            209,
+            569,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            210,
+            569,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            211,
+            569,
+            5,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            212,
+            569,
+            6,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            213,
+            570,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            214,
+            570,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            215,
+            570,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            216,
+            570,
+            4,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            217,
+            571,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            218,
+            571,
+            2,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            219,
+            571,
+            3,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            220,
+            571,
+            4,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            221,
+            571,
+            5,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            222,
+            572,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            223,
+            572,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            224,
+            572,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            225,
+            572,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            226,
+            572,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            227,
+            572,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            228,
+            573,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            229,
+            573,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            230,
+            573,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            231,
+            573,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            232,
+            573,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            233,
+            574,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            234,
+            574,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            235,
+            574,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            236,
+            574,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            237,
+            574,
+            5,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            238,
+            575,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            239,
+            575,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            240,
+            575,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            241,
+            575,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            242,
+            575,
+            5,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            243,
+            575,
+            6,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            244,
+            576,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            245,
+            576,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            246,
+            576,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            247,
+            576,
+            4,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            248,
+            577,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            249,
+            577,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            250,
+            577,
+            3,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            251,
+            577,
+            4,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            252,
+            578,
+            1,
+            "Misransyah",
+            "Ketua",
+            ""
+        ],
+        [
+            253,
+            578,
+            2,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            254,
+            578,
+            3,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            255,
+            578,
+            4,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            256,
+            578,
+            5,
+            "Prengky",
+            "Anggota",
+            ""
+        ],
+        [
+            257,
+            579,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            258,
+            579,
+            2,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            259,
+            579,
+            3,
+            "Ardiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            260,
+            579,
+            4,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            261,
+            580,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            262,
+            580,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            263,
+            580,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            264,
+            580,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            265,
+            580,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            266,
+            580,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            267,
+            581,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            268,
+            581,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            269,
+            581,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            270,
+            581,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            271,
+            581,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            272,
+            582,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            273,
+            582,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            274,
+            582,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            275,
+            582,
+            4,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            276,
+            583,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            277,
+            583,
+            2,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            278,
+            583,
+            3,
+            "Juhriansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            279,
+            583,
+            4,
+            "Zulkifli",
+            "Anggota",
+            ""
+        ],
+        [
+            280,
+            583,
+            5,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            281,
+            584,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            282,
+            584,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            283,
+            584,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            284,
+            584,
+            4,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            285,
+            584,
+            5,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            286,
+            584,
+            6,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            287,
+            585,
+            1,
+            "Ardiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            288,
+            585,
+            2,
+            "Andri",
+            "Anggota",
+            ""
+        ],
+        [
+            289,
+            585,
+            3,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            290,
+            585,
+            4,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            291,
+            585,
+            5,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            292,
+            586,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            293,
+            586,
+            2,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            294,
+            586,
+            3,
+            "Irwansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            295,
+            586,
+            4,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            296,
+            587,
+            1,
+            "Misransyah",
+            "Ketua",
+            ""
+        ],
+        [
+            297,
+            587,
+            2,
+            "Yubri",
+            "Anggota",
+            ""
+        ],
+        [
+            298,
+            587,
+            3,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            299,
+            587,
+            4,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            300,
+            588,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            301,
+            588,
+            2,
+            "Misransyah",
+            "Anggota",
+            ""
+        ],
+        [
+            302,
+            588,
+            3,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            303,
+            588,
+            4,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            304,
+            589,
+            1,
+            "Yoseph Kurniawan",
+            "Ketua",
+            ""
+        ],
+        [
+            305,
+            589,
+            2,
+            "Irwan",
+            "Anggota",
+            ""
+        ],
+        [
+            306,
+            589,
+            3,
+            "Yonali",
+            "Anggota",
+            ""
+        ],
+        [
+            307,
+            589,
+            4,
+            "Dody",
+            "Anggota",
+            ""
+        ],
+        [
+            308,
+            589,
+            5,
+            "Hendri",
+            "Anggota",
+            ""
+        ],
+        [
+            309,
+            589,
+            6,
+            "Eddry Yehezkiel",
+            "Anggota",
+            ""
+        ],
+        [
+            310,
+            590,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            311,
+            590,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            312,
+            590,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            313,
+            590,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            314,
+            590,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            315,
+            591,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            316,
+            591,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            317,
+            591,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            318,
+            591,
+            4,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ],
+        [
+            319,
+            592,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            320,
+            592,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            321,
+            592,
+            3,
+            "Iwan Setiawan",
+            "Anggota",
+            ""
+        ],
+        [
+            322,
+            593,
+            1,
+            "Supiansyah",
+            "Ketua",
+            ""
+        ],
+        [
+            323,
+            593,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            324,
+            593,
+            3,
+            "Deksa Ersa Persada",
+            "Anggota",
+            ""
+        ],
+        [
+            325,
+            593,
+            4,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            326,
+            594,
+            1,
+            "Yubri",
+            "Ketua",
+            ""
+        ],
+        [
+            327,
+            594,
+            2,
+            "Agus Suroto",
+            "Anggota",
+            ""
+        ],
+        [
+            328,
+            594,
+            3,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            329,
+            594,
+            4,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            330,
+            595,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            331,
+            595,
+            2,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            332,
+            595,
+            3,
+            "Zainudin",
+            "Anggota",
+            ""
+        ],
+        [
+            333,
+            595,
+            4,
+            "Andri",
+            "Anggota",
+            ""
+        ],
+        [
+            334,
+            595,
+            5,
+            "Syamlani",
+            "Anggota",
+            ""
+        ],
+        [
+            335,
+            595,
+            6,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            336,
+            596,
+            1,
+            "Yubri",
+            "Ketua",
+            ""
+        ],
+        [
+            337,
+            596,
+            2,
+            "Katika",
+            "Anggota",
+            ""
+        ],
+        [
+            338,
+            596,
+            3,
+            "Romansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            339,
+            597,
+            1,
+            "Gunawan",
+            "Ketua",
+            ""
+        ],
+        [
+            340,
+            597,
+            2,
+            "Slamet Riyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            341,
+            597,
+            3,
+            "Agati",
+            "Anggota",
+            ""
+        ],
+        [
+            342,
+            598,
+            1,
+            "Andrijono",
+            "Ketua",
+            ""
+        ],
+        [
+            343,
+            598,
+            2,
+            "Okta Priyanto",
+            "Anggota",
+            ""
+        ],
+        [
+            344,
+            598,
+            3,
+            "Dagau",
+            "Anggota",
+            ""
+        ],
+        [
+            345,
+            599,
+            1,
+            "Poniman",
+            "Ketua",
+            ""
+        ],
+        [
+            346,
+            599,
+            2,
+            "Saripan",
+            "Anggota",
+            ""
+        ],
+        [
+            347,
+            599,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            ""
+        ],
+        [
+            348,
+            599,
+            4,
+            "Taibah",
+            "Anggota",
+            ""
+        ],
+        [
+            349,
+            599,
+            5,
+            "Hassanudin",
+            "Anggota",
+            ""
+        ],
+        [
+            350,
+            600,
+            1,
+            "Taufik Rahman",
+            "Ketua",
+            ""
+        ],
+        [
+            351,
+            600,
+            2,
+            "Peri Abuk",
+            "Anggota",
+            ""
+        ],
+        [
+            352,
+            600,
+            3,
+            "Suharno",
+            "Anggota",
+            ""
+        ],
+        [
+            353,
+            600,
+            4,
+            "Misransyah",
+            "Anggota",
+            ""
+        ],
+        [
+            354,
+            601,
+            1,
+            "Bambang Triyanto",
+            "Ketua",
+            ""
+        ],
+        [
+            355,
+            601,
+            2,
+            "Eko Sulistiono",
+            "Anggota",
+            ""
+        ],
+        [
+            356,
+            601,
+            3,
+            "Bambang Irawan",
+            "Anggota",
+            ""
+        ],
+        [
+            357,
+            601,
+            4,
+            "Abramsyah",
+            "Anggota",
+            ""
+        ],
+        [
+            358,
+            601,
+            5,
+            "Supiansyah",
+            "Anggota",
+            ""
+        ],
+        [
+            359,
+            601,
+            6,
+            "Noraslan",
+            "Anggota",
+            ""
+        ],
+        [
+            360,
+            601,
+            7,
+            "Suyadi",
+            "Anggota",
+            ""
+        ],
+        [
+            361,
+            601,
+            8,
+            "Lewi Marin",
+            "Anggota",
+            ""
+        ]
+    ],
+    "shLap": [
+        [
+            348,
+            "07 September 2026",
+            "ST. 282/DALKARHUT/KAL-1/9/2026",
+            "1 (satu) hari",
+            "Jl. Ahmad Yani",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "1 Kepyok, 1 Unit Mobil, 1 unit mesin ministrike, 3 Ht, 9 Roll selang, 2 Nozzle",
+            "Yurdianto",
+            "198402152024211012",
+            "-1.8986",
+            "113.4446",
+            "Cerah",
+            "-?-",
+            "-?-",
+            "-?-",
+            "-?-",
+            "-?-",
+            "Manggala Agni Pokja Katingan",
+            "Arah angin yang tidak menentu dan sumber air yang menipis",
+            "11:28 WIB",
+            "Belum Diketahui",
+            "H1: 0,39 Ha, H2: 0,32 Ha, H3: 0,13 Ha (Total: 0,84 Ha)",
+            "Kolam (S: -1.8979, E: 113.4446)",
+            "Permukaan dan Bawah",
+            "Tanah Bergambut",
+            "Garunggang, Karet, Akasia, Pakis, Semak belukar, Sawit, Tumih, Dll.",
+            "17:04 WIB",
+            "Belum padam, api masih berada di bagian tengah",
+            "pondok kerja",
+            "Arah angin yang tidak menentu dan sumber air yang menipis",
+            "pedagang dan PNS",
+            "tidak ditemukan aktivitas masyarakat",
+            "Daops Manggala Agni Kalimantan I/Palangka Raya/Pondok kerja Katingan"
+        ],
+        [
+            349,
+            "07 September 2026",
+            "ST. 282/DALKARHUT/KAL-1/9/2026",
+            "1 (satu) hari",
+            "Jl. Petruk",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "1 Unit mobil Patroli, 2 Unit Mesin Pompa ministrek, 1 Unit Mesin Robin, 10 Slang pelempar, 1 Selang hisap, 1 Y connector, 2 Nozzel",
+            "Gunawan",
+            "198402102024211008",
+            "-2.2877",
+            "114.0058",
+            "Berawan",
+            "-?-",
+            "-?-",
+            "-?-",
+            "-?-",
+            "-?-",
+            "Manggala Agni Daops Palangka Raya",
+            "",
+            "09.15 WIB",
+            "Belum diketahui",
+            "Tim 1: 0,98 Ha (H1: 0,38 Ha, H2: 0,35 Ha, H3: 0,25 Ha)",
+            "sumur bor dengan jarak dari kebakaran 20 meter",
+            "bawah",
+            "Gambut",
+            "Akasia, Gerungang, Semak belukar & Rumput Gajah",
+            "16:45 WIB",
+            "Belum Padam",
+            "Daops",
+            "",
+            "petani",
+            "tidak ditemukan aktivitas masyarakat",
+            "Daops Manggala Agni Kalimantan I/Palangka Raya"
+        ]
+    ],
+    "shLapTim": [
+        [
+            1,
+            348,
+            "Jl. Ahmad Yani",
+            "Kelurahan Kasongan Lama",
+            "Kec. Katingan Hilir",
+            "Kabupaten Katingan",
+            "-1.8986",
+            "113.4446",
+            "07 September 2026",
+            "",
+            ""
+        ],
+        [
+            2,
+            349,
+            "Jl. Petruk",
+            "Kelurahan Kalampangan",
+            "Kec. Sabangau",
+            "Kota Palangka Raya",
+            "-2.2877",
+            "114.0058",
+            "07 September 2026",
+            "",
+            ""
+        ]
+    ],
+    "shLapAnggota": [
+        [
+            1,
+            348,
+            1,
+            "Yurdianto",
+            "Ketua",
+            "198402152024211012"
+        ],
+        [
+            2,
+            348,
+            2,
+            "Andrijono",
+            "Anggota",
+            "199501252024211022"
+        ],
+        [
+            3,
+            348,
+            3,
+            "Andri",
+            "Anggota",
+            "199703302024211018"
+        ],
+        [
+            4,
+            348,
+            4,
+            "Ardiansyah",
+            "Anggota",
+            "197406042024211003"
+        ],
+        [
+            5,
+            348,
+            5,
+            "Syamlani",
+            "Anggota",
+            "197603042024211003"
+        ],
+        [
+            6,
+            348,
+            6,
+            "Zainudin",
+            "Anggota",
+            "198205032024211006"
+        ],
+        [
+            7,
+            349,
+            1,
+            "Gunawan",
+            "Ketua",
+            "198402102024211008"
+        ],
+        [
+            8,
+            349,
+            2,
+            "Irwandi",
+            "Anggota",
+            "197408122024211004"
+        ],
+        [
+            9,
+            349,
+            3,
+            "Anggar Fitriya Abidin",
+            "Anggota",
+            "198905222024211009"
+        ],
+        [
+            10,
+            349,
+            4,
+            "Agus Suroto",
+            "Anggota",
+            "197508082024211003"
+        ]
+    ]
+}
