@@ -97,22 +97,46 @@
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 fw-bold"><i class="bi bi-folder-check text-primary me-2"></i>File Hasil Generate</h6>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="loadFiles()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        <div class="d-flex gap-2">
+                            <!-- Tombol Download All (.ZIP) Global -->
+                            <a href="/api/download/zip/all" class="btn btn-sm btn-dark" title="Unduh Semua File (ST & Laporan) (.ZIP)">
+                                <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All ZIP
+                            </a>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadFiles()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active py-1 px-3" id="pills-st-tab" data-bs-toggle="pill" data-bs-target="#pills-st" type="button">Surat Tugas (ST)</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link py-1 px-3" id="pills-lap-tab" data-bs-toggle="pill" data-bs-target="#pills-lap" type="button">Laporan (Lap)</button>
-                            </li>
-                        </ul>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active py-1 px-3" id="pills-st-tab" data-bs-toggle="pill" data-bs-target="#pills-st" type="button">Surat Tugas (ST)</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link py-1 px-3" id="pills-lap-tab" data-bs-toggle="pill" data-bs-target="#pills-lap" type="button">Laporan (Lap)</button>
+                                </li>
+                            </ul>
+                        </div>
+                        
                         <div class="tab-content" id="pills-tabContent">
+                            <!-- Tab Surat Tugas -->
                             <div class="tab-pane fade show active" id="pills-st">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span class="text-muted small">File Surat Tugas</span>
+                                    <a href="/api/download/zip/st" id="btn-zip-st" class="btn btn-sm btn-outline-primary py-0">
+                                        <i class="bi bi-file-earmark-zip me-1"></i> Unduh Semua ST (.ZIP)
+                                    </a>
+                                </div>
                                 <div id="st-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
                             </div>
+
+                            <!-- Tab Laporan -->
                             <div class="tab-pane fade" id="pills-lap">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span class="text-muted small">File Laporan</span>
+                                    <a href="/api/download/zip/lap" id="btn-zip-lap" class="btn btn-sm btn-outline-success py-0">
+                                        <i class="bi bi-file-earmark-zip me-1"></i> Unduh Semua Laporan (.ZIP)
+                                    </a>
+                                </div>
                                 <div id="lap-file-list" class="list-group list-group-flush small">Memuat daftar file...</div>
                             </div>
                         </div>
@@ -204,7 +228,9 @@
                 
                 // Render ST Files
                 const stList = document.getElementById('st-file-list');
+                const btnZipSt = document.getElementById('btn-zip-st');
                 if (data.st_files && data.st_files.length > 0) {
+                    btnZipSt.classList.remove('disabled');
                     stList.innerHTML = data.st_files.map(f => `
                         <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-1">
                             <div><i class="bi bi-file-earmark-word text-primary me-2"></i>${f.name} <span class="text-muted">(${f.size_kb} KB)</span></div>
@@ -212,12 +238,15 @@
                         </div>
                     `).join('');
                 } else {
+                    btnZipSt.classList.add('disabled');
                     stList.innerHTML = '<div class="text-muted p-2">Belum ada file ST yang digenerate.</div>';
                 }
 
                 // Render Lap Files
                 const lapList = document.getElementById('lap-file-list');
+                const btnZipLap = document.getElementById('btn-zip-lap');
                 if (data.lap_files && data.lap_files.length > 0) {
+                    btnZipLap.classList.remove('disabled');
                     lapList.innerHTML = data.lap_files.map(f => `
                         <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-1">
                             <div><i class="bi bi-file-earmark-word text-success me-2"></i>${f.name} <span class="text-muted">(${f.size_kb} KB)</span></div>
@@ -225,6 +254,7 @@
                         </div>
                     `).join('');
                 } else {
+                    btnZipLap.classList.add('disabled');
                     lapList.innerHTML = '<div class="text-muted p-2">Belum ada file Laporan yang digenerate.</div>';
                 }
             } catch (err) {
