@@ -52,6 +52,7 @@ try:
     # ==========================================
     # 1. AKSES SITUS SIPONGI & DOWNLOAD TXT
     # ==========================================
+    print("Memulai: Bot Sipongi...")
     print("Mengakses situs Sipongi...")
     driver.get("https://sipongi.gakkum.kehutanan.go.id/sebaran-titik-panas")
 
@@ -128,12 +129,16 @@ try:
     # 2. UPLOAD FILE KE GOOGLE APPS SCRIPT
     # ==========================================
     print("Mengakses Google Apps Script...")
-    driver.get(
-        "https://script.google.com/macros/s/AKfycbxQBLOGJHsUI5FJTLhrUXdhZf2c3ep8XjRBSuPcqOboI53BwpEWks0qH_gCTwO-a7FiLQ/exec"
-    )
+    gas_url = "https://script.google.com/macros/s/AKfycbxQBLOGJHsUI5FJTLhrUXdhZf2c3ep8XjRBSuPcqOboI53BwpEWks0qH_gCTwO-a7FiLQ/exec"
+    driver.get(gas_url)
 
     print("Menunggu halaman Google Apps Script termuat...")
     time.sleep(5)
+
+    # CEK APAKAH SERVER GOOGLE MENGEMBALIKAN 'Service Unavailable'
+    page_source = driver.page_source
+    if "Service Unavailable" in page_source or "503" in page_source:
+        raise Exception("[ERROR KONEKSI] Server Google Apps Script merespons: Service Unavailable. Silakan coba beberapa saat lagi.")
 
     def switch_to_element_context(driver, by, value):
         if driver.find_elements(by, value):
@@ -164,7 +169,7 @@ try:
         time.sleep(2)
 
     if not found_input:
-        raise Exception("Elemen dengan id='fileInput' tidak ditemukan di iframe manapun!")
+        raise Exception("Elemen dengan id='fileInput' tidak ditemukan di iframe manapun! Kemungkinan halaman Google Apps Script gagal dimuat atau menampilkan error.")
 
     file_input = driver.find_element(By.ID, "fileInput")
     driver.execute_script(
