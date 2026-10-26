@@ -35,7 +35,7 @@
         <!-- Tombol Aksi Cepat -->
         <div class="row g-3 mb-4">
             <!-- [1] Sinkron Data -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-primary mb-2"><i class="bi bi-cloud-arrow-down-fill display-5"></i></div>
                     <h5>[1] Sinkron Data</h5>
@@ -47,7 +47,7 @@
             </div>
 
             <!-- [2] Laporan (Lap) -->
-            <div class="col-md-6 col-lg-2">
+            <div class="col-md-6 col-lg">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-success mb-2"><i class="bi bi-file-earmark-text-fill display-5"></i></div>
                     <h5>[2] Laporan (Lap)</h5>
@@ -59,7 +59,7 @@
             </div>
 
             <!-- [3] Surat Tugas (ST) -->
-            <div class="col-md-6 col-lg-2">
+            <div class="col-md-6 col-lg">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="text-info mb-2"><i class="bi bi-file-earmark-check-fill display-5"></i></div>
                     <h5>[3] Surat Tugas (ST)</h5>
@@ -71,7 +71,7 @@
             </div>
 
             <!-- [4] Surat Tugas Balai (STbalai) -->
-            <div class="col-md-6 col-lg-2">
+            <div class="col-md-6 col-lg">
                 <div class="card action-card h-100 p-3 text-center">
                     <div class="mb-2" style="color: #6f42c1;"><i class="bi bi-building-fill-check display-5"></i></div>
                     <h5>[4] ST Balai</h5>
@@ -82,12 +82,24 @@
                 </div>
             </div>
 
+            <!-- [5] Bot Sipongi -->
+            <div class="col-md-6 col-lg">
+                <div class="card action-card h-100 p-3 text-center">
+                    <div class="text-danger mb-2"><i class="bi bi-robot display-5"></i></div>
+                    <h5>[5] Bot Sipongi</h5>
+                    <p class="text-muted small mb-3">Jalankan skrip otomatisasi/bot Sipongi.</p>
+                    <button class="btn btn-outline-danger mt-auto w-100 fw-bold" onclick="callApi('/api/run-sipongi', 'Bot Sipongi')">
+                        <i class="bi bi-cpu-fill me-1"></i> Jalankan Sipongi
+                    </button>
+                </div>
+            </div>
+
             <!-- [⚡] Jalankan Semua -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg">
                 <div class="card action-card h-100 p-3 text-center border-warning">
                     <div class="text-warning mb-2"><i class="bi bi-lightning-charge-fill display-5"></i></div>
                     <h5>[⚡] Jalankan Semua</h5>
-                    <p class="text-muted small mb-3">Otomatis jalankan Sync, ST, STbalai, lalu Laporan.</p>
+                    <p class="text-muted small mb-3">Otomatis Sync, ST, STbalai, Laporan, dan Sipongi.</p>
                     <button class="btn btn-warning mt-auto w-100 fw-bold text-dark" onclick="callApi('/api/run-all', 'Menjalankan Semua Proses')">
                         <i class="bi bi-play-fill me-1"></i> Jalankan Semua
                     </button>
