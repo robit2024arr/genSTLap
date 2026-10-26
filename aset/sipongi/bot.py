@@ -6,6 +6,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.common.exceptions import (
+    WebDriverException,
+    SessionNotCreatedException,
+    TimeoutException
+)
 
 # Tentukan direktori download lokal
 download_dir = os.path.join(os.getcwd(), "downloads")
@@ -27,7 +32,7 @@ options = Options()
 # Mode headless Wajib diaktifkan di Cloud Run karena container tidak punya display fisik
 options.add_argument("--headless=new")
 options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-dev-shm-usage")  # Sangat penting untuk mencegah OOM di /dev/shm container
 options.add_argument("--disable-gpu")
 options.add_argument("--remote-debugging-port=9222")
 options.add_argument("--window-size=1920,1080")
@@ -46,9 +51,12 @@ options.add_experimental_option("prefs", prefs)
 
 # Inisialisasi Driver menggunakan ChromeDriver sistem
 service = Service("/usr/bin/chromedriver")
-driver = webdriver.Chrome(service=service, options=options)
+driver = None
 
 try:
+    print("Inisialisasi WebDriver...")
+    driver = webdriver.Chrome(service=service, options=options)
+
     # ==========================================
     # 1. AKSES SITUS SIPONGI & DOWNLOAD TXT
     # ==========================================
@@ -140,19 +148,19 @@ try:
     if "Service Unavailable" in page_source or "503" in page_source:
         raise Exception("[ERROR KONEKSI] Server Google Apps Script merespons: Service Unavailable. Silakan coba beberapa saat lagi.")
 
-    def switch_to_element_context(driver, by, value):
-        if driver.find_elements(by, value):
+    def switch_to_element_context(driver_obj, by, value):
+        if driver_obj.find_elements(by, value):
             return True
 
-        iframes = driver.find_elements(By.TAG_NAME, "iframe")
+        iframes = driver_obj.find_elements(By.TAG_NAME, "iframe")
         for index, iframe in enumerate(iframes):
             try:
-                driver.switch_to.frame(iframe)
-                if switch_to_element_context(driver, by, value):
+                driver_obj.switch_to.frame(iframe)
+                if switch_to_element_context(driver_obj, by, value):
                     return True
-                driver.switch_to.parent_frame()
+                driver_obj.switch_to.parent_frame()
             except Exception:
-                driver.switch_to.parent_frame()
+                driver_obj.switch_to.parent_frame()
                 continue
         return False
 
@@ -208,9 +216,20 @@ try:
     print(status_text if status_text else "Waktu tunggu habis membaca status.")
     print("==================================================\n")
 
+except SessionNotCreatedException as e:
+    print(f"\n[ERROR KRITIS] Gagal membuat sesi Browser. Kemungkinan besar Chrome/Chromium crash karena kehabisan RAM atau masalah binary: {e}")
+except WebDriverException as e:
+    if "crashed" in str(e) or "DevToolsActivePort" in str(e) or "cannot connect" in str(e):
+        print(f"\n[ERROR OOM / CRASH] Chrome terdeteksi mengalami crash. Di Cloud Run, ini sering terjadi karena memori RAM kontainer tidak mencukupi atau penggunaan /dev/shm terbatas: {e}")
+    else:
+        print(f"\nTerjadi kesalahan pada WebDriver: {e}")
 except Exception as e:
-    print(f"Terjadi kesalahan: {e}")
+    print(f"\nTerjadi kesalahan: {e}")
 
 finally:
-    driver.quit()
-    print("Browser ditutup.")
+    if driver:
+        try:
+            driver.quit()
+            print("Browser ditutup.")
+        except Exception:
+            pass
