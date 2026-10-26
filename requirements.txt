@@ -8,4 +8,4 @@ jinja2>=3.1.2
 python-multipart>=0.0.9
 pydantic
 selenium>=4.0.0
-webdriver-manager>=4.0.0
+
