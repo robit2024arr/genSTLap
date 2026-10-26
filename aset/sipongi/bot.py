@@ -12,7 +12,6 @@ download_dir = os.path.join(os.getcwd(), "downloads")
 if not os.path.exists(download_dir):
     os.makedirs(download_dir)
 else:
-    # Pastikan tidak ada file apapun di folder downloads saat awal berjalan
     print("Membersihkan folder downloads...")
     for filename in os.listdir(download_dir):
         file_path = os.path.join(download_dir, filename)
@@ -25,14 +24,16 @@ else:
 # Konfigurasi Chrome Options
 options = Options()
 
-# Di Cloud Run, mode headless Wajib diaktifkan karena container tidak punya display fisik
+# Mode headless Wajib diaktifkan di Cloud Run karena container tidak punya display fisik
 options.add_argument("--headless=new")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--remote-debugging-port=9222")
-# Atur ukuran jendela besar agar elemen tidak bertumpuk/keluar layar saat mode headless
 options.add_argument("--window-size=1920,1080")
+
+# PENTING: Tentukan path binary Chromium bawaan apt-get
+options.binary_location = "/usr/bin/chromium"
 
 # Konfigurasi agar file terdownload otomatis ke folder 'downloads'
 prefs = {
@@ -43,7 +44,7 @@ prefs = {
 }
 options.add_experimental_option("prefs", prefs)
 
-# Inisialisasi Driver menggunakan ChromeDriver bawaan sistem (Hasil instalasi Dockerfile)
+# Inisialisasi Driver menggunakan ChromeDriver sistem
 service = Service("/usr/bin/chromedriver")
 driver = webdriver.Chrome(service=service, options=options)
 
@@ -54,9 +55,7 @@ try:
     print("Mengakses situs Sipongi...")
     driver.get("https://sipongi.gakkum.kehutanan.go.id/sebaran-titik-panas")
 
-    # Beri waktu sebentar agar skrip JavaScript halaman selesai mengambil data wilayah (AJAX)
     time.sleep(4)
-
     wait = WebDriverWait(driver, 20)
 
     print("Memilih wilayah Kalimantan Tengah...")
@@ -69,14 +68,11 @@ try:
         )
     )
 
-    # Tunggu hingga opsi dengan value '13' benar-benar tersedia di dalam select
     wait.until(
         EC.presence_of_element_located(
             (
                 By.XPATH,
-                (
-                    "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[2]/select/option[@value='13']"
-                ),
+                "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[2]/select/option[@value='13']",
             )
         )
     )
@@ -89,9 +85,7 @@ try:
         EC.element_to_be_clickable(
             (
                 By.XPATH,
-                (
-                    "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[5]/div/button"
-                ),
+                "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[5]/div/button",
             )
         )
     )
@@ -102,9 +96,7 @@ try:
         EC.element_to_be_clickable(
             (
                 By.XPATH,
-                (
-                    "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[5]/div/ul/li[2]/a"
-                ),
+                "/html/body/div/div[1]/main/section[2]/div/div[2]/div[1]/div/div[5]/div/ul/li[2]/a",
             )
         )
     )
@@ -119,7 +111,6 @@ try:
         files = os.listdir(download_dir)
         txt_files = [f for f in files if f.endswith(".txt")]
         if txt_files:
-            # Ambil file txt terbaru
             txt_files.sort(
                 key=lambda x: os.path.getmtime(os.path.join(download_dir, x)),
                 reverse=True,
@@ -144,7 +135,6 @@ try:
     print("Menunggu halaman Google Apps Script termuat...")
     time.sleep(5)
 
-    # Fungsi rekursif untuk mencari elemen di dalam iframe bertingkat (nested iframes)
     def switch_to_element_context(driver, by, value):
         if driver.find_elements(by, value):
             return True
@@ -174,13 +164,9 @@ try:
         time.sleep(2)
 
     if not found_input:
-        raise Exception(
-            "Elemen dengan id='fileInput' tidak ditemukan di iframe manapun!"
-        )
+        raise Exception("Elemen dengan id='fileInput' tidak ditemukan di iframe manapun!")
 
     file_input = driver.find_element(By.ID, "fileInput")
-
-    # Paksa elemen agar terlihat via JS jika disembunyikan oleh CSS
     driver.execute_script(
         "arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible';",
         file_input,
@@ -200,14 +186,13 @@ try:
     # ==========================================
     print("Menunggu proses server Google Apps Script selesai...")
     status_text = ""
-    timeout_status = 60  # Waktu tunggu maksimal hingga 60 detik
+    timeout_status = 60
     start_status_time = time.time()
 
     while time.time() - start_status_time < timeout_status:
         try:
             status_div = driver.find_element(By.ID, "status")
             status_text = status_div.text
-            # Berhenti melakukan polling jika status sudah menunjukkan Berhasil atau Gagal
             if "Berhasil" in status_text or "Gagal" in status_text:
                 break
         except Exception:
@@ -222,6 +207,5 @@ except Exception as e:
     print(f"Terjadi kesalahan: {e}")
 
 finally:
-    # Tutup browser
     driver.quit()
     print("Browser ditutup.")
