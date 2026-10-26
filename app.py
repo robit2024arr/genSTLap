@@ -15,8 +15,8 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 # Inisialisasi FastAPI App
 app = FastAPI(
     title="Generator ST & Laporan API",
-    description="Backend API dan Web Interface untuk Sinkronisasi Spreadsheet dan Generator Dokumen Word",
-    version="1.0.0",
+    description="Backend API dan Web Interface untuk Sinkronisasi Spreadsheet, Generator Dokumen Word, dan Bot Sipongi",
+    version="1.1.0",
 )
 
 # Aktifkan CORS agar Google Apps Script atau frontend lain dapat mengakses API dengan leluasa
@@ -81,6 +81,7 @@ SYNC_SCRIPT = BASE_DIR / "aset" / "sh" / "ambildarispreadsheet.py"
 GENLAP_SCRIPT = BASE_DIR / "aset" / "Lap" / "genlap.py"
 GENST_SCRIPT = BASE_DIR / "aset" / "ST" / "aset" / "generator.py"
 GENSTbalai_SCRIPT = BASE_DIR / "aset" / "STbalai" / "aset" / "generator.py"
+SIPONGI_SCRIPT = BASE_DIR / "aset" / "sipongi" / "bot.py"
 
 # Folder Output
 ST_OUTPUT_DIR = BASE_DIR / "ST"
@@ -214,9 +215,23 @@ def trigger_generate_laporan(user: str = Depends(authenticate)):
     }
 
 
+@app.post("/api/run-sipongi")
+def trigger_run_sipongi(user: str = Depends(authenticate)):
+    """Menjalankan bot/skrip Sipongi."""
+    res = run_python_script(SIPONGI_SCRIPT)
+    if not res["success"]:
+        raise HTTPException(status_code=500, detail=res)
+    return {
+        "status": "success",
+        "action": "run_sipongi",
+        "message": "Skrip Sipongi berhasil dijalankan.",
+        "log": res["output"],
+    }
+
+
 @app.post("/api/run-all")
 def trigger_run_all(user: str = Depends(authenticate)):
-    """Menjalankan Sinkronisasi, Generate ST, Generate STbalai, lalu Generate Laporan sekaligus."""
+    """Menjalankan Sync, Generate ST, Generate STbalai, Generate Laporan, dan Bot Sipongi sekaligus."""
     logs = []
 
     # 1. Sync
@@ -283,11 +298,27 @@ def trigger_run_all(user: str = Depends(authenticate)):
             },
         )
 
+    # 5. Sipongi
+    sipongi_res = run_python_script(SIPONGI_SCRIPT)
+    logs.append(
+        "=== [5] BOT SIPONGI ===\n"
+        f"{sipongi_res.get('output') or sipongi_res.get('error')}"
+    )
+    if not sipongi_res["success"]:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "step": "run_sipongi",
+                "error": sipongi_res.get("error"),
+                "logs": "\n\n".join(logs),
+            },
+        )
+
     return {
         "status": "success",
         "action": "run_all",
         "message": (
-            "Semua proses (Sync, ST, STbalai, dan Laporan) berhasil diselesaikan!"
+            "Semua proses (Sync, ST, STbalai, Laporan, dan Sipongi) berhasil diselesaikan!"
         ),
         "log": "\n\n".join(logs),
         "st_files": list_generated_files(ST_OUTPUT_DIR),
@@ -309,8 +340,6 @@ def get_files(user: str = Depends(authenticate)):
 # ==================== ENDPOINT DOWNLOAD ====================
 
 
-# Catatan: Route ZIP didefinisikan LEBIH DULU daripada route file individual
-# untuk menghindari bentrok / routing ambiguity pada FastAPI.
 @app.get("/api/download/zip/{category}")
 def download_zip(category: str, user: str = Depends(authenticate)):
     """Membungkus file-file hasil generate ke dalam file ZIP dan mengunduhnya."""
