@@ -1,1 +1,1282 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Peminjaman Ruangan - Alpine.js & Supabase</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col" x-data="roomBookingApp()" x-init="initApp()">
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+        <template x-for="toast in toasts" :key="toast.id">
+            <div x-show="toast.visible" 
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                 :class="{
+                     'bg-emerald-600 border-emerald-700 text-white': toast.type === 'success',
+                     'bg-rose-600 border-rose-700 text-white': toast.type === 'error',
+                     'bg-amber-500 border-amber-600 text-white': toast.type === 'warning',
+                     'bg-slate-800 border-slate-900 text-white': toast.type === 'info'
+                 }"
+                 class="pointer-events-auto p-4 rounded-xl shadow-lg border flex items-start gap-3 text-sm font-medium">
+                <i :data-lucide="toast.icon" class="w-5 h-5 shrink-0 mt-0.5"></i>
+                <div class="flex-1" x-text="toast.message"></div>
+                <button @click="removeToast(toast.id)" class="text-white/80 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </template>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="flex-1 flex flex-col">
+
+        <!-- AUTH SCREEN (When not logged in) -->
+        <template x-if="!currentUser">
+            <div class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">
+                <!-- Background decoration -->
+                <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+
+                <div class="w-full max-w-md bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 relative z-10 border border-white/20">
+
+                    <!-- Demo Mode Alert Banner -->
+                    <div x-show="!supabaseConfigured" class="mb-6 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between text-xs text-amber-800">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="info" class="w-4 h-4 text-amber-600 shrink-0"></i>
+                            <span>Mode Demo (Supabase belum diisi)</span>
+                        </div>
+                        <button @click="showSettingsModal = true" class="underline font-semibold hover:text-amber-900">Setup Key</button>
+                    </div>
+
+                    <div x-show="supabaseConfigured" class="mb-6 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-800">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="database" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                            <span>Terhubung ke Supabase</span>
+                        </div>
+                        <button @click="showSettingsModal = true" class="underline font-semibold hover:text-emerald-900">Ubah Key</button>
+                    </div>
+
+                    <!-- Header Auth -->
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-500/30 mb-3">
+                            <i data-lucide="building-2" class="w-7 h-7"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold text-slate-900">RoomReserve</h1>
+                        <p class="text-sm text-slate-500 mt-1" x-text="authMode === 'login' ? 'Masuk ke akun peminjaman ruangan' : 'Daftar akun peminjaman baru'"></p>
+                    </div>
+
+                    <!-- Quick Demo Credentials Switcher -->
+                    <div x-show="!supabaseConfigured" class="mb-6 p-3 bg-slate-100 rounded-xl border border-slate-200">
+                        <div class="text-xs font-semibold text-slate-500 mb-2">⚡ Quick Auto-Fill Demo:</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button @click="fillDemoAccount('user')" class="py-1.5 px-3 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs border font-medium transition shadow-sm text-center">
+                                👤 User (Peminjam)
+                            </button>
+                            <button @click="fillDemoAccount('admin')" class="py-1.5 px-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs border border-indigo-200 font-medium transition shadow-sm text-center">
+                                🔑 Admin (Pengelola)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <form x-show="authMode === 'login'" @submit.prevent="handleLogin()" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Email</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="email" x-model="authForm.email" required placeholder="nama@email.com" 
+                                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="password" x-model="authForm.password" required placeholder="••••••••" 
+                                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+
+                        <button type="submit" :disabled="loading" 
+                                class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2">
+                            <template x-if="loading"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i></template>
+                            <span>Masuk Sekarang</span>
+                        </button>
+                    </form>
+
+                    <!-- REGISTER FORM -->
+                    <form x-show="authMode === 'register'" @submit.prevent="handleRegister()" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" x-model="authForm.name" required placeholder="John Doe" 
+                                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Email</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="email" x-model="authForm.email" required placeholder="nama@email.com" 
+                                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="password" x-model="authForm.password" required minlength="6" placeholder="Minimal 6 Karakter" 
+                                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Role Akun</label>
+                            <select x-model="authForm.role" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm outline-none bg-white">
+                                <option value="user">User (Peminjam Ruangan)</option>
+                                <option value="admin">Admin (Pengelola Ruangan)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" :disabled="loading" 
+                                class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2">
+                            <template x-if="loading"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i></template>
+                            <span>Daftar Akun</span>
+                        </button>
+                    </form>
+
+                    <!-- Auth Footer Switcher -->
+                    <div class="mt-6 text-center text-sm text-slate-500">
+                        <span x-text="authMode === 'login' ? 'Belum punya akun?' : 'Sudah punya akun?'"></span>
+                        <button @click="authMode = (authMode === 'login' ? 'register' : 'login')" class="text-indigo-600 font-semibold hover:underline ml-1" x-text="authMode === 'login' ? 'Daftar sekarang' : 'Login disini'"></button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- DASHBOARD MAIN APP (When logged in) -->
+        <template x-if="currentUser">
+            <div class="min-h-screen flex flex-col md:flex-row bg-slate-100">
+                
+                <!-- SIDEBAR -->
+                <aside class="w-full md:w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col justify-between">
+                    <div>
+                        <!-- Brand Header -->
+                        <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+                            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-600/30">
+                                <i data-lucide="building-2" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-lg leading-tight">RoomReserve</h2>
+                                <span class="text-xs text-slate-400">Pinjam Ruangan Online</span>
+                            </div>
+                        </div>
+
+                        <!-- User Profile Badge -->
+                        <div class="p-4 mx-4 my-4 bg-slate-800/80 rounded-xl border border-slate-700/60 flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-sm"
+                                 x-text="currentUser.name ? currentUser.name.substring(0,2).toUpperCase() : 'US'">
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="font-semibold text-sm truncate text-slate-100" x-text="currentUser.name"></div>
+                                <div class="flex items-center gap-1.5 mt-0.5">
+                                    <span :class="currentUser.role === 'admin' ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' : 'bg-blue-500/20 text-blue-300 border-blue-500/30'" 
+                                          class="text-[10px] px-2 py-0.5 rounded-full border uppercase font-bold tracking-wider" 
+                                          x-text="currentUser.role">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Menu -->
+                        <nav class="px-4 space-y-1">
+                            <button @click="activeTab = 'katalog'" 
+                                    :class="activeTab === 'katalog' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:bg-slate-800 hover:text-white'"
+                                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition">
+                                <i data-lucide="grid" class="w-5 h-5"></i>
+                                <span>Katalog Ruangan</span>
+                            </button>
+
+                            <button @click="activeTab = 'riwayat'" 
+                                    :class="activeTab === 'riwayat' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:bg-slate-800 hover:text-white'"
+                                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                                <span>Peminjaman Saya</span>
+                            </button>
+
+                            <template x-if="currentUser.role === 'admin'">
+                                <div class="pt-4 mt-4 border-t border-slate-800">
+                                    <div class="px-4 text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Panel Admin</div>
+                                    <button @click="activeTab = 'admin-approval'" 
+                                            :class="activeTab === 'admin-approval' ? 'bg-amber-600 text-white shadow-md shadow-amber-600/30' : 'text-slate-400 hover:bg-slate-800 hover:text-white'"
+                                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition">
+                                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                                        <span>Persetujuan Pinjaman</span>
+                                        <template x-if="pendingCount > 0">
+                                            <span class="ml-auto bg-amber-500 text-slate-950 font-bold text-xs px-2 py-0.5 rounded-full" x-text="pendingCount"></span>
+                                        </template>
+                                    </button>
+
+                                    <button @click="activeTab = 'admin-rooms'" 
+                                            :class="activeTab === 'admin-rooms' ? 'bg-amber-600 text-white shadow-md shadow-amber-600/30' : 'text-slate-400 hover:bg-slate-800 hover:text-white'"
+                                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition mt-1">
+                                        <i data-lucide="sliders" class="w-5 h-5"></i>
+                                        <span>Kelola Kelengkapan</span>
+                                    </button>
+                                </div>
+                            </template>
+                        </nav>
+                    </div>
+
+                    <!-- Sidebar Footer -->
+                    <div class="p-4 border-t border-slate-800 space-y-2">
+                        <button @click="showSettingsModal = true" class="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white text-xs transition">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            <span>Pengaturan Supabase</span>
+                        </button>
+                        <button @click="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-medium text-sm transition border border-rose-500/20">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span>Keluar Akun</span>
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- CONTENT AREA -->
+                <main class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
+
+                    <!-- TOP BANNER MOCK MODE -->
+                    <div x-show="!supabaseConfigured" class="mb-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-xl shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm text-amber-900">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 shrink-0"></i>
+                            <div>
+                                <span class="font-bold">Mode Simulasi (Mock Data):</span> Aplikasi berjalan secara interaktif menggunakan penyimpanan lokal browser.
+                            </div>
+                        </div>
+                        <button @click="showSettingsModal = true" class="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition">
+                            Hubungkan Supabase Real
+                        </button>
+                    </div>
+
+                    <!-- TAB 1: KATALOG RUANGAN -->
+                    <div x-show="activeTab === 'katalog'" class="space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Katalog Ruangan</h1>
+                                <p class="text-sm text-slate-500">Pilih ruangan yang sesuai dengan kebutuhan acara atau kegiatan Anda.</p>
+                            </div>
+                            <!-- Search & Filter -->
+                            <div class="w-full sm:w-72 relative">
+                                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" x-model="searchRoomQuery" placeholder="Cari ruangan atau fasilitas..." 
+                                       class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 outline-none bg-white">
+                            </div>
+                        </div>
+
+                        <!-- Room Cards Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <template x-for="room in filteredRooms" :key="room.id">
+                                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition group">
+                                    <div class="relative h-48 bg-slate-100 overflow-hidden">
+                                        <img :src="room.image_url" :alt="room.name" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                                             onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Ruangan'">
+                                        <span :class="room.is_active ? 'bg-emerald-500/90 text-white' : 'bg-slate-500/90 text-white'"
+                                              class="absolute top-3 right-3 text-[11px] font-bold px-2.5 py-1 rounded-full backdrop-blur-md uppercase tracking-wider"
+                                              x-text="room.is_active ? 'Tersedia' : 'Non-aktif'">
+                                        </span>
+                                    </div>
+                                    <div class="p-5 flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <div class="flex items-center justify-between gap-2 mb-2">
+                                                <h3 class="font-bold text-lg text-slate-900" x-text="room.name"></h3>
+                                                <div class="flex items-center gap-1 text-xs text-slate-500 font-semibold bg-slate-100 px-2.5 py-1 rounded-lg shrink-0">
+                                                    <i data-lucide="users" class="w-3.5 h-3.5 text-indigo-600"></i>
+                                                    <span x-text="room.capacity + ' Orang'"></span>
+                                                </div>
+                                            </div>
+                                            <p class="text-xs text-slate-600 mb-4 line-clamp-2" x-text="room.description"></p>
+
+                                            <!-- Facilities Tag -->
+                                            <div class="flex flex-wrap gap-1.5 mb-5">
+                                                <template x-for="fac in room.facilities" :key="fac">
+                                                    <span class="text-[11px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-md" x-text="fac"></span>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <button @click="openBookingModal(room)" :disabled="!room.is_active"
+                                                class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold rounded-xl text-sm transition flex items-center justify-center gap-2">
+                                            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                                            <span>Ajukan Peminjaman</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: RIWAYAT PEMINJAMAN SAYA -->
+                    <div x-show="activeTab === 'riwayat'" class="space-y-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-900">Peminjaman Saya</h1>
+                            <p class="text-sm text-slate-500">Pantau status persetujuan dan riwayat peminjaman ruangan Anda.</p>
+                        </div>
+
+                        <!-- Statistics Counter -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                                <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="list-ordered" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Total Pinjaman</div>
+                                    <div class="text-2xl font-bold text-slate-900" x-text="userBookings.length">0</div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                                <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="clock" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Menunggu (Pending)</div>
+                                    <div class="text-2xl font-bold text-amber-600" x-text="userBookings.filter(b=>b.status==='pending').length">0</div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="check-circle" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Disetujui</div>
+                                    <div class="text-2xl font-bold text-emerald-600" x-text="userBookings.filter(b=>b.status==='approved').length">0</div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="x-circle" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Ditolak</div>
+                                    <div class="text-2xl font-bold text-rose-600" x-text="userBookings.filter(b=>b.status==='rejected').length">0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table Filter -->
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <div class="p-4 border-b border-slate-200/80 flex items-center justify-between gap-4">
+                                <h3 class="font-bold text-slate-900 text-sm">Daftar Pengajuan</h3>
+                                <select x-model="bookingFilterStatus" class="px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 outline-none">
+                                    <option value="all">Semua Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Disetujui</option>
+                                    <option value="rejected">Ditolak</option>
+                                </select>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-6 py-3">Ruangan</th>
+                                            <th class="px-6 py-3">Keperluan / Acara</th>
+                                            <th class="px-6 py-3">Waktu Peminjaman</th>
+                                            <th class="px-6 py-3">Peserta</th>
+                                            <th class="px-6 py-3">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200">
+                                        <template x-for="item in filteredUserBookings" :key="item.id">
+                                            <tr class="hover:bg-slate-50/80 transition">
+                                                <td class="px-6 py-4 font-semibold text-slate-900" x-text="getRoomName(item.room_id)"></td>
+                                                <td class="px-6 py-4">
+                                                    <div class="font-medium text-slate-800" x-text="item.title"></div>
+                                                    <template x-if="item.admin_notes">
+                                                        <div class="text-xs text-rose-600 mt-1 italic" x-text="'Catatan Admin: ' + item.admin_notes"></div>
+                                                    </template>
+                                                </td>
+                                                <td class="px-6 py-4 text-xs text-slate-600">
+                                                    <div class="font-semibold text-slate-700" x-text="formatDate(item.start_time)"></div>
+                                                    <div class="text-slate-500" x-text="formatTimeRange(item.start_time, item.end_time)"></div>
+                                                </td>
+                                                <td class="px-6 py-4 text-xs font-medium text-slate-600" x-text="item.attendees + ' orang'"></td>
+                                                <td class="px-6 py-4">
+                                                    <span :class="{
+                                                        'bg-amber-100 text-amber-700 border-amber-200': item.status === 'pending',
+                                                        'bg-emerald-100 text-emerald-700 border-emerald-200': item.status === 'approved',
+                                                        'bg-rose-100 text-rose-700 border-rose-200': item.status === 'rejected'
+                                                    }" class="px-2.5 py-1 rounded-full border text-xs font-bold uppercase tracking-wider"
+                                                    x-text="item.status">
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        <template x-if="filteredUserBookings.length === 0">
+                                            <tr>
+                                                <td colspan="5" class="px-6 py-8 text-center text-slate-400 text-sm">Belum ada pengajuan peminjaman.</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: ADMIN APPROVAL PANEL -->
+                    <div x-show="activeTab === 'admin-approval' && currentUser.role === 'admin'" class="space-y-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-900">Persetujuan Peminjaman</h1>
+                            <p class="text-sm text-slate-500">Tinjau dan kelola persetujuan pengajuan pinjaman dari user.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+                                <h3 class="font-bold text-slate-900 text-sm">Semua Pengajuan Pinjaman</h3>
+                                <div class="text-xs font-medium text-slate-500" x-text="'Total: ' + allBookings.length + ' Data'"></div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-6 py-3">Pemohon</th>
+                                            <th class="px-6 py-3">Ruangan</th>
+                                            <th class="px-6 py-3">Keperluan Acara</th>
+                                            <th class="px-6 py-3">Waktu</th>
+                                            <th class="px-6 py-3">Status</th>
+                                            <th class="px-6 py-3 text-right">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200">
+                                        <template x-for="item in allBookings" :key="item.id">
+                                            <tr class="hover:bg-slate-50/80 transition">
+                                                <td class="px-6 py-4">
+                                                    <div class="font-semibold text-slate-900" x-text="item.user_name || 'User'"></div>
+                                                    <div class="text-xs text-slate-500" x-text="item.user_email"></div>
+                                                </td>
+                                                <td class="px-6 py-4 font-semibold text-slate-800" x-text="getRoomName(item.room_id)"></td>
+                                                <td class="px-6 py-4">
+                                                    <div class="font-medium text-slate-800" x-text="item.title"></div>
+                                                    <div class="text-xs text-slate-500" x-text="item.attendees + ' Peserta'"></div>
+                                                </td>
+                                                <td class="px-6 py-4 text-xs">
+                                                    <div class="font-semibold text-slate-700" x-text="formatDate(item.start_time)"></div>
+                                                    <div class="text-slate-500" x-text="formatTimeRange(item.start_time, item.end_time)"></div>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <span :class="{
+                                                        'bg-amber-100 text-amber-700 border-amber-200': item.status === 'pending',
+                                                        'bg-emerald-100 text-emerald-700 border-emerald-200': item.status === 'approved',
+                                                        'bg-rose-100 text-rose-700 border-rose-200': item.status === 'rejected'
+                                                    }" class="px-2.5 py-1 rounded-full border text-xs font-bold uppercase tracking-wider"
+                                                    x-text="item.status">
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <template x-if="item.status === 'pending'">
+                                                        <div class="flex items-center justify-end gap-2">
+                                                            <button @click="approveBooking(item.id)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
+                                                                Approve
+                                                            </button>
+                                                            <button @click="openRejectModal(item)" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
+                                                                Reject
+                                                            </button>
+                                                        </div>
+                                                    </template>
+                                                    <template x-if="item.status !== 'pending'">
+                                                        <span class="text-xs text-slate-400 italic">Selesai Ditinjau</span>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: ADMIN ROOM CRUD MANAGEMENT -->
+                    <div x-show="activeTab === 'admin-rooms' && currentUser.role === 'admin'" class="space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Kelola Ruangan</h1>
+                                <p class="text-sm text-slate-500">Tambah, ubah detail, atau non-aktifkan daftar ruangan.</p>
+                            </div>
+                            <button @click="openRoomModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>Tambah Ruangan</span>
+                            </button>
+                        </div>
+
+                        <!-- Table Kelola Ruangan -->
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-6 py-3">Nama Ruangan</th>
+                                            <th class="px-6 py-3">Kapasitas</th>
+                                            <th class="px-6 py-3">Fasilitas</th>
+                                            <th class="px-6 py-3">Status</th>
+                                            <th class="px-6 py-3 text-right">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200">
+                                        <template x-for="room in rooms" :key="room.id">
+                                            <tr class="hover:bg-slate-50/80 transition">
+                                                <td class="px-6 py-4 flex items-center gap-3">
+                                                    <img :src="room.image_url" class="w-12 h-12 rounded-lg object-cover bg-slate-100" onerror="this.src='https://placehold.co/100x100/e2e8f0/475569?text=Ruang'">
+                                                    <div>
+                                                        <div class="font-bold text-slate-900" x-text="room.name"></div>
+                                                        <div class="text-xs text-slate-500 line-clamp-1" x-text="room.description"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 font-semibold text-slate-700" x-text="room.capacity + ' Orang'"></td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex flex-wrap gap-1">
+                                                        <template x-for="f in room.facilities" :key="f">
+                                                            <span class="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded" x-text="f"></span>
+                                                        </template>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <span :class="room.is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'" 
+                                                          class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider" 
+                                                          x-text="room.is_active ? 'Aktif' : 'Non-Aktif'">
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <div class="flex items-center justify-end gap-2">
+                                                        <button @click="openRoomModal(room)" class="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
+                                                            <i data-lucide="edit" class="w-4 h-4"></i>
+                                                        </button>
+                                                        <button @click="deleteRoom(room.id)" class="p-2 text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </template>
+    </div>
+
+    <!-- MODAL 1: FORM AJUKAN PEMINJAMAN -->
+    <div x-show="showBookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+        <div @click.away="showBookingModal = false" class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 space-y-5 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center border-b pb-4 border-slate-100">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-900">Form Peminjaman Ruangan</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mt-0.5" x-text="selectedRoom ? selectedRoom.name : ''"></p>
+                </div>
+                <button @click="showBookingModal = false" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form @submit.prevent="submitBooking()" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Acara / Keperluan</label>
+                    <input type="text" x-model="bookingForm.title" required placeholder="Contoh: Rapat Koordinasi Tim IT" 
+                           class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Waktu Mulai</label>
+                        <input type="datetime-local" x-model="bookingForm.start_time" required 
+                               class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Waktu Selesai</label>
+                        <input type="datetime-local" x-model="bookingForm.end_time" required 
+                               class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Perkiraan Peserta (Orang)</label>
+                    <input type="number" x-model="bookingForm.attendees" required min="1" :max="selectedRoom ? selectedRoom.capacity : 500" 
+                           class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="pt-3 flex gap-3">
+                    <button type="button" @click="showBookingModal = false" class="w-1/2 py-2.5 border border-slate-300 font-semibold text-slate-700 text-sm rounded-xl hover:bg-slate-50 transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/30 transition">
+                        Kirim Pengajuan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADMIN REJECT REASON MODAL -->
+    <div x-show="showRejectModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+        <div @click.away="showRejectModal = false" class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 class="font-bold text-lg text-slate-900">Tolak Pengajuan</h3>
+            <p class="text-xs text-slate-500">Berikan alasan penolakan agar pemohon dapat mengetahuinya.</p>
+            <div>
+                <textarea x-model="rejectReason" rows="3" placeholder="Contoh: Ruangan digunakan untuk maintenance jadwal rutin." 
+                          class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-rose-500 outline-none"></textarea>
+            </div>
+            <div class="flex gap-3">
+                <button @click="showRejectModal = false" class="w-1/2 py-2.5 border border-slate-300 text-sm font-semibold rounded-xl hover:bg-slate-50">Batal</button>
+                <button @click="confirmRejectBooking()" class="w-1/2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-rose-600/30">Konfirmasi Penolakan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: ROOM FORM MODAL (ADD / EDIT ROOM) -->
+    <div x-show="showRoomModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+        <div @click.away="showRoomModal = false" class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                <h3 class="font-bold text-lg text-slate-900" x-text="roomForm.id ? 'Edit Detail Ruangan' : 'Tambah Ruangan Baru'"></h3>
+                <button @click="showRoomModal = false" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form @submit.prevent="saveRoom()" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Ruangan</label>
+                    <input type="text" x-model="roomForm.name" required placeholder="Contoh: Auditorium Utama" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Kapasitas (Orang)</label>
+                        <input type="number" x-model="roomForm.capacity" required placeholder="50" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Status Ketersediaan</label>
+                        <select x-model="roomForm.is_active" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none bg-white">
+                            <option :value="true">Aktif / Tersedia</option>
+                            <option :value="false">Non-Aktif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Deskripsi Ruangan</label>
+                    <textarea x-model="roomForm.description" rows="2" placeholder="Penjelasan singkat posisi atau kondisi ruangan..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Fasilitas (Pisahkan Koma)</label>
+                    <input type="text" x-model="roomForm.facilitiesText" placeholder="AC, Projector, Sound System, WiFi" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">URL Gambar / Foto</label>
+                    <input type="url" x-model="roomForm.image_url" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="pt-3 flex gap-3">
+                    <button type="button" @click="showRoomModal = false" class="w-1/2 py-2.5 border border-slate-300 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-600/30">Simpan Ruangan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: SUPABASE SETTINGS SETUP MODAL -->
+    <div x-show="showSettingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+        <div @click.away="showSettingsModal = false" class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                <h3 class="font-bold text-lg text-slate-900">Konfigurasi Supabase Client</h3>
+                <button @click="showSettingsModal = false" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-500 leading-relaxed">
+                Masukkan Project URL dan Public Anon Key Supabase Anda untuk menghubungkan ke database nyata. Jika dikosongkan, sistem menggunakan Mode Simulasi LocalStorage.
+            </p>
+
+            <form @submit.prevent="saveSupabaseSettings()" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">SUPABASE URL</label>
+                    <input type="url" x-model="supabaseConfig.url" placeholder="https://xyz.supabase.co" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">SUPABASE ANON KEY</label>
+                    <input type="password" x-model="supabaseConfig.key" placeholder="eyJhbGciOiJIUzI1Ni..." class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" @click="resetSupabaseSettings()" class="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">
+                        Reset Ke Demo
+                    </button>
+                    <button type="submit" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-lg shadow-indigo-600/30">
+                        Simpan & Hubungkan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ALPINE APP JAVASCRIPT LOGIC -->
+    <script>
+        function roomBookingApp() {
+            return {
+                // Supabase & App State
+                supabaseClient: null,
+                supabaseConfigured: false,
+                supabaseConfig: {
+                    url: '',
+                    key: ''
+                },
+                loading: false,
+                authMode: 'login', // 'login' | 'register'
+                activeTab: 'katalog', // 'katalog' | 'riwayat' | 'admin-approval' | 'admin-rooms'
+                
+                // User & Auth
+                currentUser: null,
+                authForm: {
+                    name: '',
+                    email: '',
+                    password: '',
+                    role: 'user'
+                },
+
+                // Modals Controls
+                showBookingModal: false,
+                showRejectModal: false,
+                showRoomModal: false,
+                showSettingsModal: false,
+
+                // Data Collections
+                rooms: [],
+                allBookings: [],
+                userBookings: [],
+
+                // Filters & Forms Data
+                searchRoomQuery: '',
+                bookingFilterStatus: 'all',
+                selectedRoom: null,
+                bookingForm: {
+                    title: '',
+                    start_time: '',
+                    end_time: '',
+                    attendees: 10
+                },
+                rejectBookingId: null,
+                rejectReason: '',
+                roomForm: {
+                    id: null,
+                    name: '',
+                    capacity: 30,
+                    description: '',
+                    facilitiesText: '',
+                    facilities: [],
+                    image_url: '',
+                    is_active: true
+                },
+
+                // Toasts Notification System
+                toasts: [],
+
+                // Initializer
+                initApp() {
+                    // Check Supabase Local Configuration
+                    const savedUrl = localStorage.getItem('ROOM_SUPABASE_URL');
+                    const savedKey = localStorage.getItem('ROOM_SUPABASE_KEY');
+                    if (savedUrl && savedKey) {
+                        this.supabaseConfig.url = savedUrl;
+                        this.supabaseConfig.key = savedKey;
+                        this.initSupabase(savedUrl, savedKey);
+                    }
+
+                    // Load Stored User Session if exists
+                    const savedUser = localStorage.getItem('ROOM_CURRENT_USER');
+                    if (savedUser) {
+                        try {
+                            this.currentUser = JSON.parse(savedUser);
+                        } catch (e) {
+                            this.currentUser = null;
+                        }
+                    }
+
+                    // Load Initial Mock / Database Data
+                    this.loadRoomsData();
+                    this.loadBookingsData();
+
+                    // Render Lucide Icons
+                    this.$nextTick(() => { lucide.createIcons(); });
+                },
+
+                // Toast Helper
+                addToast(message, type = 'info', icon = 'bell') {
+                    const id = Date.now();
+                    this.toasts.push({ id, message, type, icon, visible: true });
+                    setTimeout(() => { this.removeToast(id); }, 4000);
+                    this.$nextTick(() => { lucide.createIcons(); });
+                },
+
+                removeToast(id) {
+                    this.toasts = this.toasts.filter(t => t.id !== id);
+                },
+
+                // Supabase Setup Methods
+                initSupabase(url, key) {
+                    try {
+                        if (window.supabase) {
+                            this.supabaseClient = window.supabase.createClient(url, key);
+                            this.supabaseConfigured = true;
+                        }
+                    } catch (err) {
+                        console.error('Gagal inisialisasi Supabase SDK:', err);
+                        this.supabaseConfigured = false;
+                    }
+                },
+
+                saveSupabaseSettings() {
+                    if (this.supabaseConfig.url && this.supabaseConfig.key) {
+                        localStorage.setItem('ROOM_SUPABASE_URL', this.supabaseConfig.url);
+                        localStorage.setItem('ROOM_SUPABASE_KEY', this.supabaseConfig.key);
+                        this.initSupabase(this.supabaseConfig.url, this.supabaseConfig.key);
+                        this.addToast('Konfigurasi Supabase berhasil disimpan!', 'success', 'check-circle');
+                    } else {
+                        this.resetSupabaseSettings();
+                    }
+                    this.showSettingsModal = false;
+                },
+
+                resetSupabaseSettings() {
+                    localStorage.removeItem('ROOM_SUPABASE_URL');
+                    localStorage.removeItem('ROOM_SUPABASE_KEY');
+                    this.supabaseConfig.url = '';
+                    this.supabaseConfig.key = '';
+                    this.supabaseClient = null;
+                    this.supabaseConfigured = false;
+                    this.addToast('Kembali ke Mode Simulasi Demo', 'info', 'info');
+                },
+
+                // Auto-fill Credential for quick demo testing
+                fillDemoAccount(role) {
+                    if (role === 'user') {
+                        this.authForm.email = 'user@demo.com';
+                        this.authForm.password = 'password123';
+                        this.authForm.name = 'Budi Santoso';
+                    } else {
+                        this.authForm.email = 'admin@demo.com';
+                        this.authForm.password = 'admin123';
+                        this.authForm.name = 'Admin Pengelola';
+                    }
+                },
+
+                // Auth Handlers
+                async handleLogin() {
+                    this.loading = true;
+
+                    if (this.supabaseConfigured && this.supabaseClient) {
+                        try {
+                            const { data, error } = await this.supabaseClient.auth.signInWithPassword({
+                                email: this.authForm.email,
+                                password: this.authForm.password
+                            });
+                            if (error) throw error;
+                            
+                            this.currentUser = {
+                                id: data.user.id,
+                                email: data.user.email,
+                                name: data.user.user_metadata?.name || data.user.email.split('@')[0],
+                                role: data.user.user_metadata?.role || 'user'
+                            };
+                            this.saveSessionAndProceed();
+                        } catch (err) {
+                            this.addToast(err.message || 'Login gagal', 'error', 'x-circle');
+                        } finally {
+                            this.loading = false;
+                        }
+                    } else {
+                        // Demo Mock Auth Logic
+                        setTimeout(() => {
+                            const isAdmin = this.authForm.email.includes('admin');
+                            this.currentUser = {
+                                id: 'usr_' + Date.now(),
+                                email: this.authForm.email,
+                                name: isAdmin ? 'Admin Pengelola' : (this.authForm.name || 'User Peminjam'),
+                                role: isAdmin ? 'admin' : 'user'
+                            };
+                            this.saveSessionAndProceed();
+                            this.loading = false;
+                        }, 500);
+                    }
+                },
+
+                async handleRegister() {
+                    this.loading = true;
+
+                    if (this.supabaseConfigured && this.supabaseClient) {
+                        try {
+                            const { data, error } = await this.supabaseClient.auth.signUp({
+                                email: this.authForm.email,
+                                password: this.authForm.password,
+                                options: {
+                                    data: {
+                                        name: this.authForm.name,
+                                        role: this.authForm.role
+                                    }
+                                }
+                            });
+                            if (error) throw error;
+                            this.addToast('Registrasi berhasil! Silahkan login.', 'success', 'check-circle');
+                            this.authMode = 'login';
+                        } catch (err) {
+                            this.addToast(err.message || 'Registrasi gagal', 'error', 'x-circle');
+                        } finally {
+                            this.loading = false;
+                        }
+                    } else {
+                        // Demo Registration logic
+                        setTimeout(() => {
+                            this.addToast('Pendaftaran akun simulasi berhasil!', 'success', 'check-circle');
+                            this.authMode = 'login';
+                            this.loading = false;
+                        }, 500);
+                    }
+                },
+
+                saveSessionAndProceed() {
+                    localStorage.setItem('ROOM_CURRENT_USER', JSON.stringify(this.currentUser));
+                    this.addToast(`Selamat datang kembali, ${this.currentUser.name}!`, 'success', 'sparkles');
+                    this.activeTab = 'katalog';
+                    this.loadBookingsData();
+                    this.$nextTick(() => { lucide.createIcons(); });
+                },
+
+                handleLogout() {
+                    if (this.supabaseConfigured && this.supabaseClient) {
+                        this.supabaseClient.auth.signOut();
+                    }
+                    this.currentUser = null;
+                    localStorage.removeItem('ROOM_CURRENT_USER');
+                    this.addToast('Anda telah keluar dari aplikasi', 'info', 'log-out');
+                    this.$nextTick(() => { lucide.createIcons(); });
+                },
+
+                // Rooms Data CRUD & Helpers
+                loadRoomsData() {
+                    const defaultRooms = [
+                        {
+                            id: 'room_1',
+                            name: 'Auditorium Utama',
+                            capacity: 150,
+                            description: 'Ruang aula besar cocok untuk seminar nasional, konferensi, dan wisuda.',
+                            facilities: ['AC Central', 'Sound System 2000W', 'Proyektor HD', 'Panggung'],
+                            image_url: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&auto=format&fit=crop&q=80',
+                            is_active: true
+                        },
+                        {
+                            id: 'room_2',
+                            name: 'Ruang Meeting Executive',
+                            capacity: 20,
+                            description: 'Ruangan eksklusif berpenerangan alami untuk rapat jajaran direksi.',
+                            facilities: ['Smart TV 75"', 'Video Conference', 'Whiteboard Glass', 'Coffee Machine'],
+                            image_url: 'https://images.unsplash.com/photo-1431540015161-0bf868a2d407?w=600&auto=format&fit=crop&q=80',
+                            is_active: true
+                        },
+                        {
+                            id: 'room_3',
+                            name: 'Lab Komputer Innovation',
+                            capacity: 40,
+                            description: 'Dilengkapi 40 unit PC spesifikasi tinggi untuk pelatihan IT & workshop.',
+                            facilities: ['PC High-End', 'High Speed Internet', 'AC', 'Proyektor'],
+                            image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&auto=format&fit=crop&q=80',
+                            is_active: true
+                        }
+                    ];
+
+                    const localRooms = localStorage.getItem('ROOM_ITEMS');
+                    if (localRooms) {
+                        try {
+                            this.rooms = JSON.parse(localRooms);
+                        } catch (e) {
+                            this.rooms = defaultRooms;
+                        }
+                    } else {
+                        this.rooms = defaultRooms;
+                        localStorage.setItem('ROOM_ITEMS', JSON.stringify(defaultRooms));
+                    }
+                },
+
+                get filteredRooms() {
+                    if (!this.searchRoomQuery) return this.rooms;
+                    const q = this.searchRoomQuery.toLowerCase();
+                    return this.rooms.filter(r => 
+                        r.name.toLowerCase().includes(q) || 
+                        r.description.toLowerCase().includes(q) ||
+                        r.facilities.some(f => f.toLowerCase().includes(q))
+                    );
+                },
+
+                openRoomModal(room = null) {
+                    if (room) {
+                        this.roomForm = {
+                            id: room.id,
+                            name: room.name,
+                            capacity: room.capacity,
+                            description: room.description,
+                            facilitiesText: room.facilities ? room.facilities.join(', ') : '',
+                            facilities: room.facilities || [],
+                            image_url: room.image_url,
+                            is_active: room.is_active
+                        };
+                    } else {
+                        this.roomForm = {
+                            id: null,
+                            name: '',
+                            capacity: 30,
+                            description: '',
+                            facilitiesText: 'AC, Proyektor, WiFi',
+                            facilities: [],
+                            image_url: '',
+                            is_active: true
+                        };
+                    }
+                    this.showRoomModal = true;
+                },
+
+                saveRoom() {
+                    const facilitiesArray = this.roomForm.facilitiesText
+                        .split(',')
+                        .map(item => item.trim())
+                        .filter(item => item.length > 0);
+
+                    if (this.roomForm.id) {
+                        // Update
+                        const idx = this.rooms.findIndex(r => r.id === this.roomForm.id);
+                        if (idx !== -1) {
+                            this.rooms[idx] = {
+                                ...this.rooms[idx],
+                                name: this.roomForm.name,
+                                capacity: parseInt(this.roomForm.capacity),
+                                description: this.roomForm.description,
+                                facilities: facilitiesArray,
+                                image_url: this.roomForm.image_url || 'https://placehold.co/600x400',
+                                is_active: this.roomForm.is_active
+                            };
+                            this.addToast('Ruangan berhasil diperbarui', 'success', 'check-circle');
+                        }
+                    } else {
+                        // Create
+                        const newRoom = {
+                            id: 'room_' + Date.now(),
+                            name: this.roomForm.name,
+                            capacity: parseInt(this.roomForm.capacity),
+                            description: this.roomForm.description,
+                            facilities: facilitiesArray,
+                            image_url: this.roomForm.image_url || 'https://placehold.co/600x400',
+                            is_active: this.roomForm.is_active
+                        };
+                        this.rooms.push(newRoom);
+                        this.addToast('Ruangan baru berhasil ditambahkan', 'success', 'check-circle');
+                    }
+
+                    localStorage.setItem('ROOM_ITEMS', JSON.stringify(this.rooms));
+                    this.showRoomModal = false;
+                },
+
+                deleteRoom(id) {
+                    if (confirm('Apakah Anda yakin ingin menghapus ruangan ini?')) {
+                        this.rooms = this.rooms.filter(r => r.id !== id);
+                        localStorage.setItem('ROOM_ITEMS', JSON.stringify(this.rooms));
+                        this.addToast('Ruangan telah dihapus', 'warning', 'trash-2');
+                    }
+                },
+
+                // Bookings Handlers & Logic
+                loadBookingsData() {
+                    const defaultBookings = [
+                        {
+                            id: 'bkg_1',
+                            room_id: 'room_1',
+                            user_id: 'usr_1',
+                            user_name: 'Budi Santoso',
+                            user_email: 'user@demo.com',
+                            title: 'Seminar Pembekalan Magang 2026',
+                            start_time: '2026-11-10T09:00',
+                            end_time: '2026-11-10T12:00',
+                            attendees: 100,
+                            status: 'approved',
+                            admin_notes: null
+                        },
+                        {
+                            id: 'bkg_2',
+                            room_id: 'room_2',
+                            user_id: 'usr_1',
+                            user_name: 'Budi Santoso',
+                            user_email: 'user@demo.com',
+                            title: 'Rapat Evaluasi Triwulan IV',
+                            start_time: '2026-11-12T14:00',
+                            end_time: '2026-11-12T16:00',
+                            attendees: 15,
+                            status: 'pending',
+                            admin_notes: null
+                        }
+                    ];
+
+                    const localBookings = localStorage.getItem('ROOM_BOOKINGS');
+                    if (localBookings) {
+                        try {
+                            this.allBookings = JSON.parse(localBookings);
+                        } catch (e) {
+                            this.allBookings = defaultBookings;
+                        }
+                    } else {
+                        this.allBookings = defaultBookings;
+                        localStorage.setItem('ROOM_BOOKINGS', JSON.stringify(defaultBookings));
+                    }
+
+                    this.filterUserBookings();
+                },
+
+                filterUserBookings() {
+                    if (!this.currentUser) {
+                        this.userBookings = [];
+                        return;
+                    }
+                    this.userBookings = this.allBookings.filter(b => b.user_email === this.currentUser.email);
+                },
+
+                get filteredUserBookings() {
+                    if (this.bookingFilterStatus === 'all') return this.userBookings;
+                    return this.userBookings.filter(b => b.status === this.bookingFilterStatus);
+                },
+
+                get pendingCount() {
+                    return this.allBookings.filter(b => b.status === 'pending').length;
+                },
+
+                openBookingModal(room) {
+                    this.selectedRoom = room;
+                    // Default start tomorrow 09:00
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const dateStr = tomorrow.toISOString().slice(0, 10);
+
+                    this.bookingForm = {
+                        title: '',
+                        start_time: `${dateStr}T09:00`,
+                        end_time: `${dateStr}T11:00`,
+                        attendees: Math.min(10, room.capacity)
+                    };
+                    this.showBookingModal = true;
+                },
+
+                submitBooking() {
+                    if (!this.currentUser) return;
+
+                    const newBooking = {
+                        id: 'bkg_' + Date.now(),
+                        room_id: this.selectedRoom.id,
+                        user_id: this.currentUser.id,
+                        user_name: this.currentUser.name,
+                        user_email: this.currentUser.email,
+                        title: this.bookingForm.title,
+                        start_time: this.bookingForm.start_time,
+                        end_time: this.bookingForm.end_time,
+                        attendees: parseInt(this.bookingForm.attendees),
+                        status: 'pending',
+                        admin_notes: null
+                    };
+
+                    this.allBookings.unshift(newBooking);
+                    localStorage.setItem('ROOM_BOOKINGS', JSON.stringify(this.allBookings));
+                    this.filterUserBookings();
+
+                    this.showBookingModal = false;
+                    this.addToast('Pengajuan peminjaman berhasil dikirim!', 'success', 'send');
+                    this.activeTab = 'riwayat';
+                },
+
+                approveBooking(id) {
+                    const idx = this.allBookings.findIndex(b => b.id === id);
+                    if (idx !== -1) {
+                        this.allBookings[idx].status = 'approved';
+                        localStorage.setItem('ROOM_BOOKINGS', JSON.stringify(this.allBookings));
+                        this.filterUserBookings();
+                        this.addToast('Pengajuan pinjaman berhasil disetujui', 'success', 'check-circle');
+                    }
+                },
+
+                openRejectModal(booking) {
+                    this.rejectBookingId = booking.id;
+                    this.rejectReason = '';
+                    this.showRejectModal = true;
+                },
+
+                confirmRejectBooking() {
+                    const idx = this.allBookings.findIndex(b => b.id === this.rejectBookingId);
+                    if (idx !== -1) {
+                        this.allBookings[idx].status = 'rejected';
+                        this.allBookings[idx].admin_notes = this.rejectReason || 'Tidak memenuhi kriteria';
+                        localStorage.setItem('ROOM_BOOKINGS', JSON.stringify(this.allBookings));
+                        this.filterUserBookings();
+                        this.addToast('Pengajuan pinjaman ditolak', 'warning', 'x-circle');
+                    }
+                    this.showRejectModal = false;
+                },
+
+                // Utilities
+                getRoomName(roomId) {
+                    const r = this.rooms.find(item => item.id === roomId);
+                    return r ? r.name : 'Ruangan Tidak Ditemukan';
+                },
+
+                formatDate(dateStr) {
+                    if (!dateStr) return '-';
+                    const d = new Date(dateStr);
+                    return d.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                },
+
+                formatTimeRange(startStr, endStr) {
+                    if (!startStr || !endStr) return '-';
+                    const start = new Date(startStr).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                    const end = new Date(endStr).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                    return `${start} - ${end} WIB`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
