@@ -755,6 +755,22 @@
 
     <!-- ALPINE APP JAVASCRIPT LOGIC -->
     <script>
+document.addEventListener('alpine:init', () => {
+  Alpine.store('supabaseConfig', {
+    // Masukkan kredensial Supabase Anda di sini
+    url: 'https://yyejfjoeoiifiagqrxck.supabase.co',
+    anonKey: 'sb_publishable_mqmTe4FyVQ8aijExs5scAQ_49_c6_Hz',
+    
+    client: null,
+    
+    init() {
+      if (this.url && this.anonKey && window.supabase) {
+        this.client = window.supabase.createClient(this.url, this.anonKey);
+      }
+    }
+  });
+});
+        
         function roomBookingApp() {
             return {
                 // Supabase & App State
