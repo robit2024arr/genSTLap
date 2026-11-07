@@ -1,0 +1,373 @@
+#!/bin/bash
+
+echo "Membuat file sw.js..."
+cat << 'EOF' > sw.js
+// UBAH versi ini (misal v2, v3) setiap kali Anda update kode ke GitHub Pages
+const CACHE_NAME = 'pwa-pinjam-ruang-v1';
+const ASSETS = [
+  './',
+  './index.html',
+  'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js',
+  'https://cdn.tailwindcss.com',
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+];
+
+// Instalasikan Service Worker & Skip Waiting
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+  );
+});
+
+// Bersihkan cache lama & Claim Client saat Aktif
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Stale-While-Revalidate Strategy
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+        }
+        return networkResponse;
+      }).catch(() => cachedResponse);
+
+      return cachedResponse || fetchPromise;
+    })
+  );
+});
+EOF
+
+echo "Membuat file index.html..."
+cat << 'EOF' > index.html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Peminjaman Ruangan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-800" x-data="app()" x-init="initApp()">
+
+  <!-- Toast Notifikasi Update PWA -->
+  <div x-show="updateAvailable" class="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-lg shadow-xl flex items-center justify-between gap-4 z-50">
+    <span>Versi baru aplikasi tersedia!</span>
+    <button @click="window.location.reload()" class="bg-white text-blue-600 px-3 py-1 rounded text-sm font-bold">Update Sekarang</button>
+  </div>
+
+  <!-- Header & Status Koneksi -->
+  <header class="bg-blue-700 text-white p-4 shadow-md">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <div>
+        <h1 class="text-xl font-bold">E-Pinjam Ruangan</h1>
+        <p class="text-xs text-blue-200" x-text="currentUser ? 'Login sebagai: ' + currentUser.nama + ' (' + currentUser.role + ')' : 'Silakan Login'"></p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs px-2.5 py-1 rounded-full font-semibold"
+              :class="isOnline ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'"
+              x-text="isOnline ? 'Online' : 'Offline'"></span>
+        <template x-if="currentUser">
+          <button @click="logout()" class="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded font-medium">Logout</button>
+        </template>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-4">
+
+    <!-- 1. HALAMAN LOGIN -->
+    <template x-if="!currentUser">
+      <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+        <h2 class="text-xl font-bold mb-4 text-center">Login Pegawai</h2>
+        <form @submit.prevent="login()">
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-1">NIP</label>
+            <input type="text" x-model="loginForm.nip" class="w-full border p-2 rounded" placeholder="Masukkan NIP" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" x-model="loginForm.password" class="w-full border p-2 rounded" placeholder="Masukkan Password" required>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700">Masuk</button>
+        </form>
+      </div>
+    </template>
+
+    <!-- 2. APABILA SUDAH LOGIN -->
+    <template x-if="currentUser">
+      <div class="space-y-6">
+
+        <!-- Form Tambah Peminjaman -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold mb-4">Form Pinjam Ruangan</h2>
+          <form @submit.prevent="savePeminjaman()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Pilih Ruangan</label>
+              <select x-model="form.ruangan_nama" class="w-full border p-2 rounded" required>
+                <option value="">-- Pilih Ruangan --</option>
+                <template x-for="r in listRuangan" :key="r.id">
+                  <option :value="r.nama_ruangan" x-text="r.nama_ruangan + ' (Kap: ' + r.kapasitas + ')'"></option>
+                </template>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Tanggal Pinjam</label>
+              <input type="date" x-model="form.tanggal_pinjam" class="w-full border p-2 rounded" required>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium mb-1">Keterangan / Keperluan</label>
+              <input type="text" x-model="form.keterangan" class="w-full border p-2 rounded" placeholder="Contoh: Rapat Koordinasi Tahunan" required>
+            </div>
+            <div class="md:col-span-2 flex justify-between items-center">
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700">
+                Ajukan Peminjaman
+              </button>
+              <template x-if="isOnline && hasPendingData">
+                <button type="button" @click="syncWithSupabase()" class="bg-amber-600 text-white text-sm px-3 py-2 rounded font-medium hover:bg-amber-700">
+                  Sync Data Pendings
+                </button>
+              </template>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tabel Daftar Peminjaman -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold mb-4">Daftar Peminjaman Ruangan</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-100 text-xs text-gray-600 uppercase border-b">
+                  <th class="p-3">Peminjam</th>
+                  <th class="p-3">Ruangan</th>
+                  <th class="p-3">Tanggal</th>
+                  <th class="p-3">Keperluan</th>
+                  <th class="p-3">Status Sync</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y text-sm">
+                <template x-for="item in listPeminjaman" :key="item.id">
+                  <tr>
+                    <td class="p-3" x-text="item.nama_peminjam"></td>
+                    <td class="p-3 font-semibold" x-text="item.ruangan_nama"></td>
+                    <td class="p-3" x-text="item.tanggal_pinjam"></td>
+                    <td class="p-3" x-text="item.keterangan"></td>
+                    <td class="p-3">
+                      <!-- Status Sync per Baris -->
+                      <span :class="item.sync_status === 'synced' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-amber-100 text-amber-700 border-amber-300'"
+                            class="px-2 py-0.5 rounded-full text-xs font-semibold border"
+                            x-text="item.sync_status === 'synced' ? 'Sudah sinkron' : 'Belum sinkron'"></span>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PANEL ADMIN (Hanya tampil untuk role admin) -->
+        <template x-if="currentUser.role === 'admin'">
+          <div class="bg-slate-800 text-white p-6 rounded-lg shadow-md mt-8">
+            <h2 class="text-lg font-bold mb-4 border-b border-slate-700 pb-2">Panel Admin: Tambah Pegawai Baru</h2>
+            <form @submit.prevent="registerPegawai()" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium mb-1">NIP Pegawai</label>
+                <input type="text" x-model="adminForm.nip" class="w-full border p-2 rounded text-black" placeholder="NIP Baru" required>
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1">Nama Lengkap</label>
+                <input type="text" x-model="adminForm.nama" class="w-full border p-2 rounded text-black" placeholder="Nama Pegawai" required>
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1">Password</label>
+                <input type="password" x-model="adminForm.password" class="w-full border p-2 rounded text-black" placeholder="Password" required>
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1">Role</label>
+                <select x-model="adminForm.role" class="w-full border p-2 rounded text-black">
+                  <option value="pegawai">Pegawai</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div class="md:col-span-2 flex items-end">
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded font-semibold hover:bg-green-700 w-full">
+                  Daftarkan Pegawai
+                </button>
+              </div>
+            </form>
+          </div>
+        </template>
+
+      </div>
+    </template>
+
+  </main>
+
+  <script>
+    // GANTI SESUAI URL DAN ANON KEY SUPABASE ANDA
+    const SUPABASE_URL = 'https://YOUR_SUPABASE_URL.supabase.co';
+    const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function app() {
+      return {
+        isOnline: navigator.onLine,
+        updateAvailable: false,
+        currentUser: JSON.parse(localStorage.getItem('user_session') || 'null'),
+        
+        loginForm: { nip: '', password: '' },
+        adminForm: { nip: '', nama: '', password: '', role: 'pegawai' },
+        form: { ruangan_nama: '', tanggal_pinjam: '', keterangan: '' },
+
+        listRuangan: JSON.parse(localStorage.getItem('list_ruangan') || '[]'),
+        listPeminjaman: JSON.parse(localStorage.getItem('list_peminjaman') || '[]'),
+
+        get hasPendingData() {
+          return this.listPeminjaman.some(item => item.sync_status === 'pending');
+        },
+
+        async initApp() {
+          if ('serviceWorker' in navigator) {
+            const reg = await navigator.serviceWorker.register('./sw.js');
+            reg.update();
+            reg.onupdatefound = () => {
+              const installingWorker = reg.installing;
+              installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  this.updateAvailable = true;
+                }
+              };
+            };
+          }
+
+          window.addEventListener('online', () => {
+            this.isOnline = true;
+            this.syncWithSupabase();
+          });
+          window.addEventListener('offline', () => { this.isOnline = false; });
+
+          if (this.isOnline) {
+            this.fetchRuangan();
+            this.syncWithSupabase();
+          }
+        },
+
+        async login() {
+          if (!this.isOnline) {
+            alert('Proses login membutuhkan koneksi internet awal.');
+            return;
+          }
+          const { data, error } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('nip', this.loginForm.nip)
+            .eq('password', this.loginForm.password)
+            .single();
+
+          if (error || !data) {
+            alert('NIP atau Password salah!');
+          } else {
+            this.currentUser = data;
+            localStorage.setItem('user_session', JSON.stringify(data));
+            this.loginForm = { nip: '', password: '' };
+          }
+        },
+
+        logout() {
+          this.currentUser = null;
+          localStorage.removeItem('user_session');
+        },
+
+        async fetchRuangan() {
+          const { data } = await supabaseClient.from('ruangan').select('*');
+          if (data && data.length > 0) {
+            this.listRuangan = data;
+            localStorage.setItem('list_ruangan', JSON.stringify(data));
+          }
+        },
+
+        async saveData() {
+          localStorage.setItem('list_peminjaman', JSON.stringify(this.listPeminjaman));
+        },
+
+        async savePeminjaman() {
+          const newItem = {
+            id: crypto.randomUUID(),
+            user_nip: this.currentUser.nip,
+            nama_peminjam: this.currentUser.nama,
+            ruangan_nama: this.form.ruangan_nama,
+            tanggal_pinjam: this.form.tanggal_pinjam,
+            keterangan: this.form.keterangan,
+            sync_status: 'pending'
+          };
+
+          this.listPeminjaman.unshift(newItem);
+          this.saveData();
+          this.form = { ruangan_nama: '', tanggal_pinjam: '', keterangan: '' };
+
+          if (this.isOnline) {
+            await this.sendToSupabase(newItem);
+          }
+        },
+
+        async sendToSupabase(item) {
+          const { sync_status, ...payload } = item;
+          const { error } = await supabaseClient.from('peminjaman').insert([payload]);
+
+          if (!error) {
+            item.sync_status = 'synced';
+          } else {
+            item.sync_status = 'pending';
+          }
+          this.saveData();
+        },
+
+        async syncWithSupabase() {
+          const pendings = this.listPeminjaman.filter(i => i.sync_status === 'pending');
+          for (const item of pendings) {
+            await this.sendToSupabase(item);
+          }
+          const { data } = await supabaseClient.from('peminjaman').select('*').order('created_at', { ascending: false });
+          if (data) {
+            this.listPeminjaman = data.map(d => ({ ...d, sync_status: 'synced' }));
+            this.saveData();
+          }
+        },
+
+        async registerPegawai() {
+          if (!this.isOnline) {
+            alert('Menambah pegawai harus dalam keadaan online.');
+            return;
+          }
+          const { error } = await supabaseClient.from('users').insert([this.adminForm]);
+          if (error) {
+            alert('Gagal menambah pegawai: ' + error.message);
+          } else {
+            alert('Pegawai dengan NIP ' + this.adminForm.nip + ' berhasil didaftarkan!');
+            this.adminForm = { nip: '', nama: '', password: '', role: 'pegawai' };
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+EOF
+
+echo "Selesai! File sw.js dan index.html berhasil dibuat."
